@@ -22,6 +22,7 @@ code {
 
 img:has(+ img),
 img + img {
+    text-align: center;
     display: inline-block;
     width: calc(50% - 12px);
     max-width: 240px;
@@ -29,3 +30,18 @@ img + img {
     margin: 10px 4px;
     vertical-align: top;
 }
+
+html, body {
+  background: #1e1e1e;
+  color: #ffffff;
+}
+
+a { color: #8ab4f8; }
+a:visited { color: #c58af9; }
+
+pre, code {
+  background: #2a2a2a;
+  color: #ffffff;
+}
+
+:root { color-scheme: dark; }
