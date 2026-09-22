@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>checkm8dg</title>
+    <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+    <p><a href="../index.html">&lt;</a></p>
+    <div align="left">
+    <h1>Downgrading 32bit devices with checkm8</h1>
+    <h4>2020年7月2日</h4>
+    <h5>Imported: 2026年9月22日</h5>
+    <p>This is just a simple write up on downgrading 32 bit devices that are *currently* vulnerable to the <a href="https://www.theiphonewiki.com/wiki/Checkm8_Exploit">checkm8</a> exploit. Theoretically, this method works on all 32 bit devices from A5-A6X, but only specific devices have checkm8 implemented at the moment. That will likely change in the future, as <a href="https://twitter.com/matteyeux/status/1277241543745769472" target="_blank">the A5 bootrom is being worked on.</a></p>
+    <p>The device I will be using to demonstrate is the iPhone 5C. I will be downgrading to 7.0.4 (11B554a) with shsh blobs that I dumped using Odysseus. Prior to the downgrade, I restored the phone to 10.3.3 using iTunes, but this step is entirely unnecessary.</p>
+    <img src="src/ios-before.png" width="250" alt="ios before">
+    <h2>What you’ll need:</h2>
+    <p>Before downgrading, you need to download the IPSW for the firmware that you wish to downgrade to. IPSWs can be found at <a href="https://ipsw.me/">ipsw.me</a>. I downloaded the 7.0.4 IPSW for the iPhone 5C. You are also going to require futurerestore, iBoot32Patcher, and xpwntool, which can be found on github. iBoot32Patcher and xpwntool might require compiling, but futurerestore can be downloaded from <a href="https://github.com/s0uthwest/futurerestore">s0uthwest's github</a> page (rest in peace, s0uthwes).&nbsp;</p>
+    <p>You're also going to require a tool to put your device into checkm8 pwned DFU mode. I use <a href="https://twitter.com/_dora_2_yuru_">dora2-ios</a>'s tool to put your device into pwned DFU as it has proven to be stable with my multiple runs of downgrading.&nbsp;I will be writing about how to use ch3rryflower in a future write up about the iOS 7.x iBoot exploit.</p>
+    <p>These are the files that I had before beginning with the downgrade process.</p>
+    <img src="src/files-before.png" width="600" alt="files before">
+    <h2>Preparing iBSS</h2>
+    <p>The first step is to extract iBSS from the IPSW file. You can unzip the whole archive and grab iBSS from the <b><code>Firmware/dfu/ </code></b>but the faster way is to use <b>unzip</b>.</p>
+    <p>Run this command to extract iBSS:</p>
+    <p><b><code>unzip -j iPhone5,3_7.0.4_11B554a_Restore.ipsw Firmware/dfu/iBSS*</code></b><br></p>
+    <p>Once iBSS is extracted, you're going to require the keys for the iBSS file, which can be found at the iPhone Wiki page for <a href="https://www.theiphonewiki.com/wiki/Firmware_Keys">Firmware Keys</a>.</p>
+    <p>Once you have the keys for the iBSS file you extracted, run xpwntool with the keys you grabbed.</p>
+    <p><b><code>./xpwntool iBSS.n48ap.RELEASE.dfu iBSS_decrypt -iv 0f1c4c51a3f6353aa6045fc1b387fd44 -k b5e4a8cebd423f7946244cccef632ca085b05c7dfc5385d8fdc1bfbc8415868e</code></b><br></p>
+    <p>After you run xpwntool, run the following command:</p>
+    <p><b><code>./iBoot32Patcher iBSS_decrypt pwnediBSS --rsa&nbsp;</code></b></p>
+    <img src="src/patch-ibss.png" width="600" alt="patch ibss">
+    <p>The resulting file will be pwnediBSS which would usually be used to send the device into kloader DFU (kDFU) using Odysseus, but we can put the device into the same state using checkm8, thus eliminating the need to restore, install a jailbreak with <b>tfp0</b>&nbsp;enabled, and run kloader. You can skip all of that and continue to the next steps, thus saving an enormous amount of time.</p>
+    <p>At this point, these are the files you should have.</p>
+    <img src="src/files-after.png" width="600" alt="files after">
+    <h2>Entering pwned DFU</h2>
+    <p>Put your device into DFU mode, and connect the device into the computer. Then run the following command:</p>
+    <p><b><code>./pwnedDFU -p</code></b></p>
+    <p>Then after that finishes, run <b><code>./pwnedDFU -f pwnediBSS</code></b></p>
+    <img src="src/pwned-dfu.png" width="600" alt="pwned dfu">
+    <p>If these commands fail at any point, put the device back into DFU mode, and rerun the commands. The device should be in soft dfu mode now.</p>
+    <h2>Restoring</h2>
+    <p>The final step is to downgrade the device. I will be using futurerestore to downgrade the device to 7.0.4. Futurerestore does not require the patching of IPSW files to downgrade the device, the patches are done by the program. You're going to need the IPSW, the corresponding shsh blob, and an internet connection. Once you have everything ready, run the following command:</p>
+    <p><b><code>./futurerestore -t iPhone5,3-7.0.4-11B554a.shsh --latest-baseband --use-pwndfu iPhone5,3_7.0.4_11B554a_Restore.ipsw</code></b></p>
+    <img src="src/futurerestore.png" width="600" alt="futurerestore">
+    <p>The downgrade should go successfully. Using the <b><code>--latest-baseband</code></b> argument in futurerestore will flash your target firmware with the latest baseband the device can support. If you want to specify an alternative baseband that is being signed, you can use <b><code>-b</code></b> and <b><code>-p</code></b> with a custom baseband and BuildManifest. The specified baseband must be signed, or else the restore will fail during the <b>Updating Baseband (19)</b> stage.</p>
+    <img src="src/restore-complete.png" width="600" alt="restore complete">
+    <p>You're done! The device should be downgraded to your specified firmware. It is important to note that futurerestore might have difficulty locating keys for beta firmwares, which there is a work around for by creating a HTTP server with the keys, but it takes extra work.&nbsp;</p>
+    <img src="src/ios-after.png" width="250" alt="ios after">
+    <hr>
+    <h2>Using Odysseus</h2>
+    <p>Everything I described can be done on idevicerestore and idevicererestore, but if you choose not to use those tools, you will need to create a patched IPSW using Odysseus.&nbsp;</p>
+    <p>Instructions for the creation of an Odysseus IPSW and the download can be found at <a href="https://dayt0n.com/articles/Odysseus/">the official page for Odysseus</a>.</p>
+    <p>The important thing to remember is to either add your own baseband by dumping one and adding <b><code>baseband.tar</code></b>&nbsp;to the end of the command when creating an patched IPSW, or to include to <b><code>--bbupdate</code></b> argument to command.&nbsp;</p>
+    <p>An example of an Odysseus command is:</p>
+    <p><b><code>./ipsw iPhone5,3_7.0.4_11B554a_Restore.ipsw custom.ipsw -memory -bbupdate</code></b></p>
+    <p>or if you choose to include your own dumped baseband:</p>
+    <p><b><code>./ipsw iPhone5,3_7.0.4_11B554a_Restore.ipsw custom.ipsw -memory baseband.tar</code></b><br></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>135dg</title>
+    <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+    <p><a href="../index.html">&lt;</a></p>
+    <div align="left">
+        <h1>Downgrading from 13.5.1+ back to 13.5 with shsh2 blobs</h1>
+        <h4>2020年7月1日</h4>
+        <h5>Imported: 2026年9月22日</h5>
+        <hr>
+        <p>Before beginning, this is a reminder that this is not a
+method of downgrading without shsh2 blobs. If you missed the signing of the
+13.5 and never saved blobs, then you're out of luck. This method also does not
+work on devices not vulnerable to the checkm8 bootrom exploit. The oldest phone
+this method supports is the iPhone 6S, and the latest phone this method
+supports is the iPhone X. Any device above the iPhone XS is not vulnerable to
+this exploit.</p>
+        <hr>
+        <p>The device I will be using to demonstrate this downgrade is the
+iPhone SE. I have shsh2 blobs saved for 13.5, and the device is running 13.5.1
+freshly restored using iTunes.</p>
+        <img src="src/ios-before.png" width="300" alt="ios before">
+        <p>This downgrade is essentially useless for those who prefer
+to use checkra1n to jailbreak their devices, but I prefer unc0ver, so that's why I'm covering it.</p>
+        <p>This guide is written for those who are on 13.5.1, but this can
+be replicated for those who want to update to 13.5 from 13.4.1 or any version below.
+The steps are essentially the same, but setting the nonce may vary depending on
+whether you are using unc0ver/chimera or checkra1n. I'll be using the Generator
+Auto Setter by Halo Michael as it makes setting the nonce of checkra1n devices
+quick.</p>
+        <p>After jailbreaking with checkra1n, open Cydia and install the following repo: "https://halo-michael.github.io/repo"</p>
+        <img src="src/cydia-repository.png" width="300" alt="https://halo-michael.github.io/repo">
+        <p>Navigate into the repository and locate "Generator Auto Setter" and install the tweak.</p>
+        <img src="src/generator-auto-setter.png" width="300" alt="generator auto setter">
+        <p>By default, the nonce that tsssaver from&nbsp;1conan uses to save shsh blobs is&nbsp;<b>0x1111111111111111</b>. Generator Auto Setter defaults to this generator when you install it.</p>
+        <img src="src/generator-value.png" width="300" alt="Generator set to 0x11111...">
+        <p>If your shsh blobs use a different nonce, you can install your preferred Terminal app for iOS and run the setgenerator command with the nonce found in your shsh2 blob.<br></p>
+        <p>Once the generator is set, you can move to your computer. The computer I will be using is a MacBook Pro running macOS 10.13.6, but this works on Windows.</p>
+        <p>The files that are required are the 13.5 IPSW for your device, the shsh2 blob for 13.5, and s0uthwest's fork of futurerestore (rest in peace, s0uthwes).&nbsp;</p>
+        <p>The command I initially ran was</p>
+        <p><b><code>./futurerestore -t ECID_iPhone8,4_n69uap_13.5-17F75_nonce.shsh2 -d --latest-sep --latest-baseband iPhone_4.0_64bit_13.5_17F75_Restore.ipsw</code></b></p>
+        <p>but I kept encountering errors with locating the BuildManifest of the latest firmware in futurerestore.</p>
+        <img src="src/buildmanifest-error.png" width="600" alt="buildmanifest error">
+        <p>I had to resort to downloading the 13.5.1 IPSW for my iPhone SE, and unzipping the BuildManifest.plist, Baseband firmware, and the sep firmware files.&nbsp;</p>
+        <p>The commands I used to extract those were:</p>
+        <p><b><code>unzip -j iPhone_4.0_64bit_13.5.1_17F80_Restore.ipsw BuildManifest.plist</code></b></p>
+        <p><b><code>unzip -j iPhone_4.0_64bit_13.5.1_17F80_Restore.ipsw Firmware/Mav10-9.60.01.Release.bbfw</code></b></p>
+        <p><b><code>unzip -j iPhone_4.0_64bit_13.5.1_17F80_Restore.ipsw Firmware/all_flash/sep-firmware.n69u.RELEASE.im4p</code></b></p>
+        <p>These commands are specific to my device, which is the n69u version of the iPhone SE (First Generation).</p>
+        <img src="src/restore-files.png" width="600" alt="Files for restoring">
+        <p>With all the files extracted, I moved to finalizing the restore with manually specifying the BuildManifest, sep, and Baseband. The command I ran was</p>
+        <p><b><code>./futurerestore -t ECID_iPhone8,4_n69uap_13.5-17F75_nonce.shsh2 -s sep-firmware.n69u.RELEASE.im4p -m BuildManifest.plist -b Mav10-9.60.01.Release.bbfw -p BuildManifest.plist iPhone_4.0_64bit_13.5_17F75_Restore.ipsw</code></b></p>
+        <p>Once futurerestore begins the downgrade, the device should enter recovery mode, and if the nonce generator was set properly, the device will boot into iBEC.</p>
+        <img src="src/recovery-mode.jpg" width="300" alt="iPhone in recovery mode">
+        <p>The restore takes a little bit of time, and should vary depending on the device you're downgrading.</p>
+        <img src="src/restore-complete.png" width="600" alt="Finished downgrade">
+        <p>Once futurerestore finishes, the device should reboot into the setup screen, and will have successfully downgraded to iOS 13.5.&nbsp;</p>
+        <img src="src/ios-after.png" width="300" alt="ios after">
+        <p>13.5 is vulnerable to unc0ver, so with AltStore, you can install unc0ver and have the semi-untethered jailbreak, which I prefer over checkra1n.&nbsp;</p>
+    </div>
+</body>
+</html>

@@ -4,7 +4,7 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>verboserestore</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="../../style.css">
     </head>
     <body>
         <div align="left">
@@ -42,7 +42,7 @@
 		<p><b><code>./idevicerestore -w -e iPhone4,1_8.4.1_12H321_VerboseBoot.ipsw</code></b></p>
 		<img src="src/restore.png" width="600" height="auto">
 		<p>The restore succeeded and the device passed the -v variable to iBEC and the patch applied to restored_external worked, the device was completing the restore process with verbose output.</p>
-		<img src="src/verbose.jfif" width="auto" height="450">
+		<img src="src/verbose.jfif" width="300" height="auto">
 		<p>I got the DONE message in idevicerestore, and the device booted the setup screen, and the device was activated on iOS 8.4.1.</p>
 		<p>This does not allow the device to verbose boot. In order for a device to verbose boot untethered, an iBoot exploit is required, such as derebusantiquis for iOS 7.x (iBoot-1940). I have access to multiple devices with iOS 7 shsh blobs, so I can show a PoC of verbose restore + untethered verbose boot.</p>
     </body>
