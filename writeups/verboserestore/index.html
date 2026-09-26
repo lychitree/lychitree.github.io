@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html>
-    <p><a href="../index.html"><</a></p>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>verboserestore</title>
-        <link rel="stylesheet" href="../../style.css">
-    </head>
-    <body>
-        <div align="left">
-        <h1>Verbose Restoring an iPhone 4S</h1>
-        <h4>2020年6月3日</h4>
-		<h5>Imported and Revised: 2025年10月8日</h5>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>lychi's tree: Verbose Restoring an iPhone 4S</title>
+<link rel="stylesheet" href="../../blog.css">
+</head>
+<body>
+<div id="outer-wrapper">
+<div id="header"><div id="header-inner">
+  <h1><a href="../../index.html">lychi's tree</a></h1>
+  <p class="description">writeups from a student exploring ios security, and now homelabs and networking</p>
+</div></div>
+<div id="main-wrapper">
+<h2 class="date-header">Wednesday, June 3, 2020</h2>
+<div class="post">
+  <h3>Verbose Restoring an iPhone 4S</h3>
+  <div class="post-body">
+<h5>Imported and Revised: 2025年10月8日</h5>
         <p>A rather short tutorial on how to force restored_external to display verbose output during the restore process.</p>
         <h2>What you’ll need:</h2>
         <p><a href="https://www.youtube.com/watch?v=fh0tB6fp0Sc">odysseusOTA2</a>
@@ -45,5 +52,50 @@
 		<img src="src/verbose.jfif" width="300" height="auto">
 		<p>I got the DONE message in idevicerestore, and the device booted the setup screen, and the device was activated on iOS 8.4.1.</p>
 		<p>This does not allow the device to verbose boot. In order for a device to verbose boot untethered, an iBoot exploit is required, such as derebusantiquis for iOS 7.x (iBoot-1940). I have access to multiple devices with iOS 7 shsh blobs, so I can show a PoC of verbose restore + untethered verbose boot.</p>
-    </body>
+</div>
+  <p class="post-footer">posted by lychi on <a href="index.html">June 3, 2020</a><br>labels: legacy ios</p>
+</div>
+<p class="nav-links"><a href="../../writeups/ibootvideo/index.html">&laquo; Newer Post</a> &nbsp;|&nbsp; <a href="../../index.html">Home</a></p>
+</div>
+<div id="sidebar-wrapper" class="sidebar">
+  <div class="widget">
+    <h2>About Me</h2>
+    <div class="profile-textblock"><b>lychi</b><br>Student. Legacy iOS research 2020&ndash;2024, now building a homelab and studying networking.</div>
+  </div>
+  <div class="widget">
+    <h2>Posts</h2>
+    <ul>
+      <li><a href="../../homelab/index.html">Building a homelab from scratch</a></li>
+      <li><a href="../../writeups/occamsrazor/index.html">Enabling offline charging on non-Chinese iPhones</a></li>
+      <li><a href="../../writeups/dralogo/index.html">Custom bootlogos with powdersn0w</a></li>
+      <li><a href="../../writeups/odysseustether/index.html">Tether downgrades with odysseusOTA2</a></li>
+      <li><a href="../../writeups/ipodrootfs/index.html">Installing and booting the iPod4,1 rootfs on the iPhone3,1</a></li>
+      <li><a href="../../writeups/checkm8dg/index.html">Downgrading 32bit devices with checkm8</a></li>
+      <li><a href="../../writeups/135dg/index.html">Downgrading from 13.5.1+ back to 13.5 with shsh2 blobs</a></li>
+      <li><a href="../../writeups/ibootvideo/index.html">Untethered Verbose Boot Demonstration with iBoot exploit</a></li>
+      <li><a href="../../writeups/verboserestore/index.html">Verbose Restoring an iPhone 4S</a></li>
+    </ul>
+  </div>
+  <div class="widget">
+    <h2>Archives</h2>
+    <ul>
+      <li><a href="../../index.html#september-2026">September 2026</a> (1)</li>
+      <li><a href="../../index.html#july-2022">July 2022</a> (2)</li>
+      <li><a href="../../index.html#june-2022">June 2022</a> (2)</li>
+      <li><a href="../../index.html#july-2020">July 2020</a> (2)</li>
+      <li><a href="../../index.html#june-2020">June 2020</a> (2)</li>
+    </ul>
+  </div>
+  <div class="widget">
+    <h2>Links</h2>
+    <ul>
+      <li><a href="../../writeups/index.html">writeups</a></li>
+      <li><a href="../../repo/index.html">cydia repo</a></li>
+      <li><a href="https://github.com/lychitree/lychitree.github.io/tree/main/repo/debs">debs</a></li>
+    </ul>
+  </div>
+</div>
+<div id="footer">lychi's tree<br>Layout designed and implemented by Claude</div>
+</div>
+</body>
 </html>

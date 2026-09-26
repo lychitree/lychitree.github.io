@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>lychi's tree: writeups</title>
+<title>lychi's tree: Building a homelab from scratch</title>
 <link rel="stylesheet" href="../blog.css">
 </head>
 <body>
@@ -13,20 +13,27 @@
   <p class="description">writeups from a student exploring ios security, and now homelabs and networking</p>
 </div></div>
 <div id="main-wrapper">
-<h2 class="date-header">Archive</h2>
+<h2 class="date-header">Friday, September 25, 2026</h2>
 <div class="post">
-  <h3>writeups</h3>
-  <div class="post-body"><ul>
-  <li><a href="../writeups/occamsrazor/index.html">Enabling offline charging on non-Chinese iPhones</a> (July 8, 2022)</li>
-  <li><a href="../writeups/dralogo/index.html">Custom bootlogos with powdersn0w</a> (July 7, 2022)</li>
-  <li><a href="../writeups/odysseustether/index.html">Tether downgrades with odysseusOTA2</a> (June 23, 2022)</li>
-  <li><a href="../writeups/ipodrootfs/index.html">Installing and booting the iPod4,1 rootfs on the iPhone3,1</a> (June 14, 2022)</li>
-  <li><a href="../writeups/checkm8dg/index.html">Downgrading 32bit devices with checkm8</a> (July 2, 2020)</li>
-  <li><a href="../writeups/135dg/index.html">Downgrading from 13.5.1+ back to 13.5 with shsh2 blobs</a> (July 1, 2020)</li>
-  <li><a href="../writeups/ibootvideo/index.html">Untethered Verbose Boot Demonstration with iBoot exploit</a> (June 30, 2020)</li>
-  <li><a href="../writeups/verboserestore/index.html">Verbose Restoring an iPhone 4S</a> (June 3, 2020)</li>
-  </ul></div>
+  <h3>Building a homelab from scratch</h3>
+  <div class="post-body">
+      <p>After a few years away from iOS research, I've moved on to networking and security. This post is the start of a running log for a home server built from scratch, from the hardware up. I'm documenting all of it here and on GitHub as I go, mostly so future me can figure out what past me did.</p>
+
+      <h4>The hardware</h4>
+      <ul>
+        <li>Lenovo M920s (i5-8500), bumped from 8GB to 32GB of RAM pulled from my PC</li>
+        <li>256GB SSD for now, 500GB/1TB upgrade planned</li>
+        <li>NETGEAR GS308E managed switch</li>
+        <li>NETGEAR R6400v2 router</li>
+      </ul>
+
+      <h4>The plan</h4>
+      <p>Proxmox VE as the hypervisor, chosen over free ESXi, with OPNsense running as the firewall VM. The whole lab stays isolated from the rest of the household network.</p>
+      <p>Next up: installing Proxmox and getting OPNsense sitting between the lab and everything else. Stay tuned.</p>
+    </div>
+  <p class="post-footer">posted by lychi on <a href="index.html">September 25, 2026</a><br>labels: homelab</p>
 </div>
+<p class="nav-links"><a href="../index.html">Home</a> &nbsp;|&nbsp; <a href="../writeups/occamsrazor/index.html">Older Post &raquo;</a></p>
 </div>
 <div id="sidebar-wrapper" class="sidebar">
   <div class="widget">

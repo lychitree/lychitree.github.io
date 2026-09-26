@@ -1,19 +1,119 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>lychi's tree</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <div align="left">
-        <h1>lychi's tree</h1>
-        writeups from a student interested in exploring the security of ios devices and seeing how far a phone can be taken outside of its boundaries. the html is intentionally basic.
-        <hr/>
-        <p><a href="./writeups/index.html">writeups</a></p>
-        <p><a href="./repo/index.html">cydia repo</a></p>
-        <p><a href="https://github.com/lychitree/lychitree.github.io/tree/main/repo/debs">debs<a/></p>
-        </ul>
-        </div>
-    </body>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>lychi's tree</title>
+<link rel="stylesheet" href="blog.css">
+</head>
+<body>
+<div id="outer-wrapper">
+<div id="header"><div id="header-inner">
+  <h1><a href="index.html">lychi's tree</a></h1>
+  <p class="description">writeups from a student exploring ios security, and now homelabs and networking</p>
+</div></div>
+<div id="main-wrapper">
+<a name="september-2026" id="september-2026"></a><h2 class="date-header">Friday, September 25, 2026</h2>
+<div class="post">
+  <h3><a href="homelab/index.html">Building a homelab from scratch</a></h3>
+  <div class="post-body"><p>After a few years away from iOS research, I've moved on to networking and security. This post is the start of a running log for a home server built from scratch, from the hardware up. I'm documenting all of it here and on GitHub as I go, mostly so future me can figure out what past me did.</p><p><a class="more" href="homelab/index.html">Read more &raquo;</a></p></div>
+  <p class="post-footer">posted by lychi on <a href="homelab/index.html">September 25, 2026</a><br>labels: homelab</p>
+</div>
+<a name="july-2022" id="july-2022"></a><h2 class="date-header">Friday, July 8, 2022</h2>
+<div class="post">
+  <h3><a href="writeups/occamsrazor/index.html">Enabling offline charging on non-Chinese iPhones</a></h3>
+  <div class="post-body"><p>According to Wikipedia, Occam's razor "is the problem-solving principle that 'entities should not be multiplied beyond necessity'. It is generally understood in the sense that with competing theories or explanations, the simpler one, for example a model with fewer parameters, is to be preferred."</p><p><a class="more" href="writeups/occamsrazor/index.html">Read more &raquo;</a></p></div>
+  <p class="post-footer">posted by lychi on <a href="writeups/occamsrazor/index.html">July 8, 2022</a><br>labels: legacy ios</p>
+</div>
+<h2 class="date-header">Thursday, July 7, 2022</h2>
+<div class="post">
+  <h3><a href="writeups/dralogo/index.html">Custom bootlogos with powdersn0w</a></h3>
+  <div class="post-body"><p>A pretty straight forward tutorial on how to create custom bootlogos for devices utilizing the iOS 7 iBoot exploit <a href="https://xerub.github.io/ios/iboot/2018/05/10/de-rebus-antiquis.html">De Rebus Antiquis<a> with Dora2-iOS's <a href="https://dora2ios.web.app/konayuki/">powdersn0w</a>. This tutorial is only for devices that can be used with the tool, so you <b>must</b> have iOS 7 shsh blobs for your device.</p><p><a class="more" href="writeups/dralogo/index.html">Read more &raquo;</a></p></div>
+  <p class="post-footer">posted by lychi on <a href="writeups/dralogo/index.html">July 7, 2022</a><br>labels: legacy ios</p>
+</div>
+<a name="june-2022" id="june-2022"></a><h2 class="date-header">Thursday, June 23, 2022</h2>
+<div class="post">
+  <h3><a href="writeups/odysseustether/index.html">Tether downgrades with odysseusOTA2</a></h3>
+  <div class="post-body"><p>Presenting another useless tethered downgrade tutorial. I'm pretty sure this method has already been detailed before, but I'm sharing it again, I guess. This tutorial is primarily for Beta Firmwares. If you're not attempting to install beta firmware, I advise you use <a href="https://github.com/synackuk/n1ghtshade">n1ghtshade</a>.</p><p><a class="more" href="writeups/odysseustether/index.html">Read more &raquo;</a></p></div>
+  <p class="post-footer">posted by lychi on <a href="writeups/odysseustether/index.html">June 23, 2022</a><br>labels: legacy ios</p>
+</div>
+<h2 class="date-header">Tuesday, June 14, 2022</h2>
+<div class="post">
+  <h3><a href="writeups/ipodrootfs/index.html">Installing and booting the iPod4,1 rootfs on the iPhone3,1</a></h3>
+  <div class="post-body"><p><b>Disclaimer:</b> This is extremely buggy. While the SoC are the same between the iPod touch 4th generation and the iPhone 4, there are many hardware differences that create many driver issues when booting the iPod firmware on an iPhone. Currently, the features I have confirmed to not work are Audio, WiFi, Bluetooth, and Camera. I have essentially done the reverse of the iOS 7 on iPod touch 4th generation project, so many of the issues and instabilities that exist within that project exist here too. Expect hangs, kernel panics, and bugs. This is purely for experimental purposes, and a result of getting bored at 2 am.</p><p><a class="more" href="writeups/ipodrootfs/index.html">Read more &raquo;</a></p></div>
+  <p class="post-footer">posted by lychi on <a href="writeups/ipodrootfs/index.html">June 14, 2022</a><br>labels: legacy ios</p>
+</div>
+<a name="july-2020" id="july-2020"></a><h2 class="date-header">Thursday, July 2, 2020</h2>
+<div class="post">
+  <h3><a href="writeups/checkm8dg/index.html">Downgrading 32bit devices with checkm8</a></h3>
+  <div class="post-body"><p>This is just a simple write up on downgrading 32 bit devices that are *currently* vulnerable to the <a href="https://www.theiphonewiki.com/wiki/Checkm8_Exploit">checkm8</a> exploit. Theoretically, this method works on all 32 bit devices from A5-A6X, but only specific devices have checkm8 implemented at the moment. That will likely change in the future, as <a href="https://twitter.com/matteyeux/status/1277241543745769472" target="_blank">the A5 bootrom is being worked on.</a></p><p><a class="more" href="writeups/checkm8dg/index.html">Read more &raquo;</a></p></div>
+  <p class="post-footer">posted by lychi on <a href="writeups/checkm8dg/index.html">July 2, 2020</a><br>labels: legacy ios</p>
+</div>
+<h2 class="date-header">Wednesday, July 1, 2020</h2>
+<div class="post">
+  <h3><a href="writeups/135dg/index.html">Downgrading from 13.5.1+ back to 13.5 with shsh2 blobs</a></h3>
+  <div class="post-body"><p>Before beginning, this is a reminder that this is not a
+method of downgrading without shsh2 blobs. If you missed the signing of the
+13.5 and never saved blobs, then you're out of luck. This method also does not
+work on devices not vulnerable to the checkm8 bootrom exploit. The oldest phone
+this method supports is the iPhone 6S, and the latest phone this method
+supports is the iPhone X. Any device above the iPhone XS is not vulnerable to
+this exploit.</p>
+        <hr></p><p><a class="more" href="writeups/135dg/index.html">Read more &raquo;</a></p></div>
+  <p class="post-footer">posted by lychi on <a href="writeups/135dg/index.html">July 1, 2020</a><br>labels: legacy ios</p>
+</div>
+<a name="june-2020" id="june-2020"></a><h2 class="date-header">Tuesday, June 30, 2020</h2>
+<div class="post">
+  <h3><a href="writeups/ibootvideo/index.html">Untethered Verbose Boot Demonstration with iBoot exploit</a></h3>
+  <div class="post-body"><p>This is a short post showcasing the iBoot exploit on iOS 7.x. With the iBoot exploit, you can pass -v in order to verbose boot untethered.</p><p><a class="more" href="writeups/ibootvideo/index.html">Read more &raquo;</a></p></div>
+  <p class="post-footer">posted by lychi on <a href="writeups/ibootvideo/index.html">June 30, 2020</a><br>labels: legacy ios</p>
+</div>
+<h2 class="date-header">Wednesday, June 3, 2020</h2>
+<div class="post">
+  <h3><a href="writeups/verboserestore/index.html">Verbose Restoring an iPhone 4S</a></h3>
+  <div class="post-body"><p>A rather short tutorial on how to force restored_external to display verbose output during the restore process.</p><p><a class="more" href="writeups/verboserestore/index.html">Read more &raquo;</a></p></div>
+  <p class="post-footer">posted by lychi on <a href="writeups/verboserestore/index.html">June 3, 2020</a><br>labels: legacy ios</p>
+</div>
+</div>
+<div id="sidebar-wrapper" class="sidebar">
+  <div class="widget">
+    <h2>About Me</h2>
+    <div class="profile-textblock"><b>lychi</b><br>Student. Legacy iOS research 2020&ndash;2024, now building a homelab and studying networking.</div>
+  </div>
+  <div class="widget">
+    <h2>Posts</h2>
+    <ul>
+      <li><a href="homelab/index.html">Building a homelab from scratch</a></li>
+      <li><a href="writeups/occamsrazor/index.html">Enabling offline charging on non-Chinese iPhones</a></li>
+      <li><a href="writeups/dralogo/index.html">Custom bootlogos with powdersn0w</a></li>
+      <li><a href="writeups/odysseustether/index.html">Tether downgrades with odysseusOTA2</a></li>
+      <li><a href="writeups/ipodrootfs/index.html">Installing and booting the iPod4,1 rootfs on the iPhone3,1</a></li>
+      <li><a href="writeups/checkm8dg/index.html">Downgrading 32bit devices with checkm8</a></li>
+      <li><a href="writeups/135dg/index.html">Downgrading from 13.5.1+ back to 13.5 with shsh2 blobs</a></li>
+      <li><a href="writeups/ibootvideo/index.html">Untethered Verbose Boot Demonstration with iBoot exploit</a></li>
+      <li><a href="writeups/verboserestore/index.html">Verbose Restoring an iPhone 4S</a></li>
+    </ul>
+  </div>
+  <div class="widget">
+    <h2>Archives</h2>
+    <ul>
+      <li><a href="index.html#september-2026">September 2026</a> (1)</li>
+      <li><a href="index.html#july-2022">July 2022</a> (2)</li>
+      <li><a href="index.html#june-2022">June 2022</a> (2)</li>
+      <li><a href="index.html#july-2020">July 2020</a> (2)</li>
+      <li><a href="index.html#june-2020">June 2020</a> (2)</li>
+    </ul>
+  </div>
+  <div class="widget">
+    <h2>Links</h2>
+    <ul>
+      <li><a href="writeups/index.html">writeups</a></li>
+      <li><a href="repo/index.html">cydia repo</a></li>
+      <li><a href="https://github.com/lychitree/lychitree.github.io/tree/main/repo/debs">debs</a></li>
+    </ul>
+  </div>
+</div>
+<div id="footer">lychi's tree<br>Layout designed and implemented by Claude</div>
+</div>
+</body>
 </html>

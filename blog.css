@@ -1,0 +1,38 @@
+body { background:#000; margin:0; color:#CCC; font:small "Trebuchet MS",Trebuchet,Verdana,sans-serif; text-align:center; }
+a:link { color:#99AADD; text-decoration:none; }
+a:visited { color:#AA77AA; text-decoration:none; }
+a:hover { color:#AADD99; text-decoration:underline; }
+#outer-wrapper { width:800px; max-width:100%; margin:0 auto; padding:10px; text-align:left; box-sizing:border-box; }
+#header { margin:5px 0 10px; border:1px solid #333; }
+#header-inner { border:1px solid #222; margin:5px; }
+#header h1 { margin:0; padding:15px 20px .25em; line-height:1.2em; font:bold 200% 'Trebuchet MS',Trebuchet,Verdana,sans-serif; letter-spacing:-1px; color:#CCC; }
+#header h1 a { color:#CCC; }
+#header .description { margin:0; padding:0 20px 15px; font:italic 78% 'Trebuchet MS',Trebuchet,Verdana,sans-serif; letter-spacing:.2em; color:#777; }
+#main-wrapper { width:550px; float:left; }
+#sidebar-wrapper { width:200px; float:right; }
+h2.date-header { margin:1.5em 0 .5em; font:normal 78% 'Trebuchet MS',Trebuchet,Arial,Verdana,sans-serif; line-height:1.4em; text-transform:uppercase; letter-spacing:.2em; color:#777; }
+.post { margin:.5em 0 1.5em; border-bottom:1px dotted #333; padding-bottom:1.5em; }
+.post h3 { margin:.25em 0 0; padding:0 0 4px; font-size:140%; font-weight:normal; line-height:1.4em; color:#AADD99; }
+.post h3 a, .post h3 a:visited { color:#AADD99; }
+.post-body { margin:0 0 .75em; line-height:1.6em; overflow-wrap:break-word; }
+.post-body h2 { color:#CCC; font-size:125%; font-weight:bold; margin:1.4em 0 .4em; }
+.post-body h3, .post-body h4 { color:#CCC; font-size:110%; margin:1.2em 0 .3em; }
+.post-body blockquote { margin:1em 20px; color:#999; border-left:3px solid #333; padding-left:10px; font-style:italic; }
+.post-body pre { background:#111; border:1px dashed #333; color:#AADD99; padding:6px; overflow-x:auto; font:11px Courier,"Courier New",monospace; }
+.post-body code { background:#111; color:#AADD99; font-family:Courier,"Courier New",monospace; overflow-wrap:anywhere; }
+.post-body ul, .post-body ol { margin:.5em 0; padding-left:1.5em; }
+.post-body img { display:block; max-width:100%; height:auto; margin:15px auto; border:1px solid #333; padding:4px; background:#111; box-sizing:border-box; }
+.post-body img:has(+ img), .post-body img + img { display:inline-block; width:calc(50% - 12px); max-width:240px; margin:10px 4px; vertical-align:top; }
+.post-body iframe { display:block; width:100%; max-width:100%; height:auto; aspect-ratio:16/9; margin:15px auto; border:1px solid #333; }
+.post-footer { margin:.75em 0; color:#777; text-transform:uppercase; letter-spacing:.1em; font:78% 'Trebuchet MS',Trebuchet,Arial,Verdana,sans-serif; line-height:1.4em; }
+.more { font-weight:bold; }
+.nav-links { margin:1em 0; font-size:90%; }
+.sidebar h2 { margin:1.5em 0 .75em; font:normal 78% 'Trebuchet MS',Trebuchet,Arial,Verdana,sans-serif; line-height:1.4em; text-transform:uppercase; letter-spacing:.2em; color:#777; }
+.sidebar ul { list-style:none; margin:0; padding:0; }
+.sidebar li { margin:0; padding:0 0 .25em 15px; text-indent:-15px; line-height:1.5em; }
+.sidebar li:before { content:"\00bb  "; color:#555; }
+.sidebar .widget { border-bottom:1px dotted #333; margin:0 0 1.5em; padding:0 0 1.5em; }
+.profile-textblock { line-height:1.6em; margin:0 0 .75em; }
+#footer { clear:both; padding-top:15px; line-height:1.6em; text-transform:uppercase; letter-spacing:.1em; text-align:center; color:#555; font-size:78%; }
+@media (max-width:800px) { #main-wrapper, #sidebar-wrapper { float:none; width:auto; } }
+
