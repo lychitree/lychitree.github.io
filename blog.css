@@ -24,6 +24,7 @@ h2.date-header { margin:1.5em 0 .5em; font:normal 78% 'Trebuchet MS',Trebuchet,A
 .post-body img { display:block; max-width:100%; height:auto; margin:15px auto; border:1px solid #333; padding:4px; background:#111; box-sizing:border-box; }
 .post-body img:has(+ img), .post-body img + img { display:inline-block; width:calc(50% - 12px); max-width:240px; margin:10px 4px; vertical-align:top; }
 .post-body iframe { display:block; width:100%; max-width:100%; height:auto; aspect-ratio:16/9; margin:15px auto; border:1px solid #333; }
+.post-body hr { border:0; border-top:1px dotted #777; margin:1.5em 0; }
 .post-footer { margin:.75em 0; color:#777; text-transform:uppercase; letter-spacing:.1em; font:78% 'Trebuchet MS',Trebuchet,Arial,Verdana,sans-serif; line-height:1.4em; }
 .more { font-weight:bold; }
 .nav-links { margin:1em 0; font-size:90%; }
