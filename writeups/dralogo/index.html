@@ -17,18 +17,18 @@
 <div class="post">
   <h3>Custom bootlogos with powdersn0w</h3>
   <div class="post-body">
-<p>A pretty straight forward tutorial on how to create custom bootlogos for devices utilizing the iOS 7 iBoot exploit <a href="https://xerub.github.io/ios/iboot/2018/05/10/de-rebus-antiquis.html">De Rebus Antiquis</a> with Dora2-iOS's <a href="https://dora2ios.web.app/konayuki/">powdersn0w</a>. This tutorial is only for devices that can be used with the tool, so you <b>must</b> have iOS 7 shsh blobs for your device.
+<p>A pretty straight forward tutorial on how to create custom bootlogos for devices utilizing the iOS 7 iBoot exploit <a href="https://xerub.github.io/ios/iboot/2018/05/10/de-rebus-antiquis.html">De Rebus Antiquis</a> with Dora2-iOS's <a href="https://dora2ios.web.app/konayuki/">powdersn0w</a>. This tutorial is only for devices that can be used with the tool, so you <b>must</b> have iOS 7 shsh blobs for your device.</p>
         <h2>What you'll need</h2>
         <p>
         A jailbreak
         <br>
         Apple File Conduit 2 (afc2)
         <br>
-        <a href="coolbooter.com">CoolBooter</a> (version 1.5)
+        <a href="https://coolbooter.com">CoolBooter</a> (version 1.5)
         <br>
         Source image for bootlogo
         <br>
-        <a href="https://dora2ios.web.app/konayuki/">powdersn0w</a> IPSW
+        <a href="https://dora2ios.web.app/konayuki/">powdersn0w</a> IPSW</p>
         <h2>Preparation</h2>
         <p>To preface, you're going to need a device that has the same screen size as your target device to create the bootlogo. This means that in order to generate a bootlogo for a device with a 4" screen, you're going to need a device with a 4" screen that's jailbroken and with CoolBooter installed to create the logo (CoolBooterCLI does not work with this AFAIK, so you have to be on iOS 7 or above to create the logos). This is just from my exprience. If other devices work, good for you.</p>
         <p>First add the CoolBooter repo in Cydia. The repo is <code><b>coolbooter.com</b></code></p>
@@ -38,7 +38,7 @@
         <p>Once the install is finished, CoolBooter will prompt you to reboot the device. Reboot the device, and set the device aside.</p>
         <img src="src/reboot.PNG" width="200" height="auto">
         <h2>Sourcing image for logo</h2>
-        <p>Bootlogos can only be as big as the resolution of the target device. So an iPhone 5 or an iPod touch 5th generation can only have a bootlogo as large as 1136 x 640. There is also a size cap as well. Though I'm not entirely sure what the max size for the image is. I generally stick to smaller images.
+        <p>Bootlogos can only be as big as the resolution of the target device. So an iPhone 5 or an iPod touch 5th generation can only have a bootlogo as large as 1136 x 640. There is also a size cap as well. Though I'm not entirely sure what the max size for the image is. I generally stick to smaller images.</p>
         <p>For this tutorial, I'll be using a Mitsubishi logo, as my car is a Mitsubishi. I found the image on Google, and it's pretty small, coming in around 4 KB. It also is pretty small in resolution, so it is perfect for a bootlogo.</p>
         <img src="src/logo.png" width="240" height="auto">
         <br>

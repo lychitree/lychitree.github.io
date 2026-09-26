@@ -17,7 +17,7 @@
 <div class="post">
   <h3>Enabling offline charging on non-Chinese iPhones</h3>
   <div class="post-body">
-<p>According to Wikipedia, Occam's razor "is the problem-solving principle that 'entities should not be multiplied beyond necessity'. It is generally understood in the sense that with competing theories or explanations, the simpler one, for example a model with fewer parameters, is to be preferred."
+<p>According to Wikipedia, Occam's razor "is the problem-solving principle that 'entities should not be multiplied beyond necessity'. It is generally understood in the sense that with competing theories or explanations, the simpler one, for example a model with fewer parameters, is to be preferred."</p>
         <p>With that being said, after spending way too much time on figuring out how to enable the Chinese exclusive "offline charging" feature, it turns out that the solution couldn't have possibly been more simple and straightforward.</p>
         <p>This is only partially a tutorial. If you have access to the tools and cables mentioned in this tutorial, then everything is replicable. However, I will not provide any links, nor will I provide any screenshots of anything except the device. Thank you.</p>
         <h2>Minor introduction</h2>
@@ -41,7 +41,7 @@
         <p>Knowing that it was infact possible to get this feature working, I proceeded to swap syscfg values between the Chinese (CH/A) syscfg and my US (LL/A) syscfg in hopes that I could some how trigger the offline charging to appear.</p>
         <p>I must have swapped 10-15 syscfg values before I gave up. The exploit isn't always reliable, so constantly resetting DFU took up a very long time. I was about 5 hours into it before I decided to give it some rest.</p>
         <p>A couple days later, while discussing with a few other people, it dawned on me that it could be model, region, and SwBh working together that cause the charging to appear, rather than one syscfg variable, so I tested it on my iPhone 5 (N42).</p>
-        <p>Doing some research shows that China had a special model of iPhone 5, with the "A" number of A1442. A1442 correponds to ME039CH/A and ME040CH/A for the 16GB Slate and Silver variants, respectively.<p>
+        <p>Doing some research shows that China had a special model of iPhone 5, with the "A" number of A1442. A1442 correponds to ME039CH/A and ME040CH/A for the 16GB Slate and Silver variants, respectively.</p>
         <img src="src/everymac.png" width="500" height="auto">
         <h2>Modifying syscfg</h2>
         <p>This iPhone 5 is a US/CDMA 16GB Silver/White iPhone5,2 (MD655LL/A)</p>
