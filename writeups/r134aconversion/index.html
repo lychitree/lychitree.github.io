@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>lychi's tree: Complete AC refresh with an OEM R134a conversion</title>
+<link rel="stylesheet" href="../../blog.css">
+</head>
+<body>
+<div id="outer-wrapper">
+<div id="header"><div id="header-inner">
+  <h1><a href="../../index.html">lychi's tree</a></h1>
+  <p class="description">writeups from a student exploring ios security, and now homelabs and networking (and sometimes cars)</p>
+</div></div>
+<div id="main-wrapper">
+<h2 class="date-header">Monday, October 21, 2024</h2>
+<div class="post">
+  <h3>Complete AC refresh with an OEM R134a conversion</h3>
+  <div class="post-body">
+      <p>Finished a complete AC system refresh with an OEM R134a conversion. Overdue post from this last summer vacation.</p>
+      <p>New condenser, evaporator, expansion valve, and drier/receiver, while the compressor and lines were sourced from a '99 SL.</p>
+      <img src="src/99complete.JPG" alt="'99 SL compressor and lines laid out">
+      <h2>Wiring and bracket</h2>
+      <p>The conversion required the wiring on the '99 compressor to be modified to fit the 1G/R12 wiring harness, which uses a 6 pin connector (5 used, 1 empty). Despite the wiring harness only having 3 pins on the 3G compressor, all of the wires are present to convert to 6 pin.</p>
+      <img src="src/99compressor_rewired.JPG" alt="99 compressor with rewired connector">
+      <img src="src/99compressor_installed.JPG" alt="99 compressor installed on the engine">
+      <p>The AC compressor bracket is different between the R12 and R134a compressors. This means the 94-99 bracket is the same part.</p>
+      <p>Note that I am referring to DOHC NA applications, your mileage may vary with DOHC TT and SOHC engines.</p>
+      <p><b>Update (July 2026):</b> Can confirm that the DOHC NA and DOHC TT AC systems interchange, following a complete Twin Turbo swap into the SL chassis.</p>
+      <h2>Vacuum and recharge</h2>
+      <p>After reassembly, the system held a vacuum overnight without any drop. Refilled with PAG 100 oil and R134a refrigerant according to the specs of a '99 AC system. Though, I ran out of R134a before the system was at full capacity, short of about 40g of refrigerant. Still blows wickedly cold.</p>
+      <p>And y'know what they say, AC blows ice cold, I know what I have.</p>
+      <img src="src/reassembled.JPG" alt="engine bay reassembled">
+      <h2>What about a retrofit?</h2>
+      <p>Theoretically, a complete evacuation and flush of an R12 system with new o-rings, PAG oil, and drier/receiver would also restore and retrofit the R12 system to the R134a refrigerant. This practice was carried out through retrofit kits offered in the 90s that converted systems to R134a, typically having a larger adapter valve fitted to the R12 lines.</p>
+      <h2>Why the full swap</h2>
+      <p>The full swap was done so every part of the AC system could simultaneously be thoroughly inspected. Replacing parts one by one sometimes blurs the bigger picture.</p>
+      <img src="src/core_removed.JPG" alt="dash opened with the evaporator removed">
+      <img src="src/core_assembly.jpg" alt="new evaporator and expansion valve being assembled">
+      <img src="src/core_foam_transferred.JPG" alt="foam insulation transferred to the new evaporator">
+      <img src="src/core_installed.JPG" alt="new evaporator installed">
+      <p>After several shops confirmed my AC was sealed, and it was still leaking, I settled on this option. Fortunately or unfortunately, during the swap, I found a shredded up rubber hose going from the condenser to the compressor. Lucky for me, I had the replacement, and it's important to remember that the rubber hoses are different between R12 and R134a.</p>
+      <img src="src/culprit.JPG" alt="shredded condenser to compressor hose" width="400">
+      <p>Not as difficult as it seems, but also not the most straightforward. A more detailed write up will be up eventually when I find the time and motivation, but hopefully for now, this will be useful for you soldiers tanking the heat.</p>
+      <p>-lychi (2024)</p>
+    </div>
+  <p class="post-footer">posted by lychi on <a href="index.html">October 21, 2024</a><br>labels: automotive</p>
+</div>
+<p class="nav-links"><a href="../../homelab/index.html">&laquo; Newer Post</a> &nbsp;|&nbsp; <a href="../../index.html">Home</a> &nbsp;|&nbsp; <a href="../occamsrazor/index.html">Older Post &raquo;</a></p>
+</div>
+<div id="sidebar-wrapper" class="sidebar">
+  <div class="widget">
+    <h2>About Me</h2>
+    <div class="profile-textblock"><b>lychi</b><br>Student. Legacy iOS research 2020&ndash;2024, now building a homelab and studying networking (and sometimes cars).</div>
+  </div>
+  <div class="widget">
+    <h2>Posts</h2>
+    <ul>
+      <li><a href="../../homelab/index.html">Building a homelab from scratch</a></li>
+      <li><a href="../../writeups/r134aconversion/index.html">Complete AC refresh with an OEM R134a conversion</a></li>
+      <li><a href="../../writeups/occamsrazor/index.html">Enabling offline charging on non-Chinese iPhones</a></li>
+      <li><a href="../../writeups/dralogo/index.html">Custom bootlogos with powdersn0w</a></li>
+      <li><a href="../../writeups/odysseustether/index.html">Tether downgrades with odysseusOTA2</a></li>
+      <li><a href="../../writeups/ipodrootfs/index.html">Installing and booting the iPod4,1 rootfs on the iPhone3,1</a></li>
+      <li><a href="../../writeups/checkm8dg/index.html">Downgrading 32bit devices with checkm8</a></li>
+      <li><a href="../../writeups/135dg/index.html">Downgrading from 13.5.1+ back to 13.5 with shsh2 blobs</a></li>
+      <li><a href="../../writeups/ibootvideo/index.html">Untethered Verbose Boot Demonstration with iBoot exploit</a></li>
+      <li><a href="../../writeups/verboserestore/index.html">Verbose Restoring an iPhone 4S</a></li>
+    </ul>
+  </div>
+  <div class="widget">
+    <h2>Archives</h2>
+    <ul>
+      <li><a href="../../index.html#september-2026">September 2026</a> (1)</li>
+      <li><a href="../../index.html#october-2024">October 2024</a> (1)</li>
+      <li><a href="../../index.html#july-2022">July 2022</a> (2)</li>
+      <li><a href="../../writeups/index.html">June 2022</a> (2)</li>
+      <li><a href="../../writeups/index.html">July 2020</a> (2)</li>
+      <li><a href="../../writeups/index.html">June 2020</a> (2)</li>
+    </ul>
+  </div>
+  <div class="widget">
+    <h2>Links</h2>
+    <ul>
+      <li><a href="../../writeups/index.html">writeups</a></li>
+      <li><a href="../../repo/index.html">cydia repo</a></li>
+      <li><a href="https://github.com/lychitree/lychitree.github.io/tree/main/repo/debs">debs</a></li>
+    </ul>
+  </div>
+</div>
+<div id="footer">lychi's tree<br>Layout designed and implemented by Claude</div>
+</div>
+</body>
+</html>
