@@ -52,3 +52,41 @@ h2.date-header { margin:1.5em 0 .5em; font:normal 78% 'Trebuchet MS',Trebuchet,A
 .post-body .parts-title { margin:1.2em 0 .3em; font-size:78%; text-transform:uppercase; letter-spacing:.2em; color:#777; }
 .post-body ul.parts { list-style:none; margin:0 0 .5em; padding:0 0 0 .8em; border-left:1px dotted #777; }
 .post-body ul.parts li { padding:.15em 0; }
+
+/* ---- light theme (Minima-style) ---- */
+html.light body { background:#FFF; color:#333; }
+html.light a:link { color:#5588AA; }
+html.light a:visited { color:#996699; }
+html.light a:hover { color:#CC6600; }
+html.light #header { border-color:#999; }
+html.light #header-inner { border-color:#BBB; }
+html.light #header h1, html.light #header h1 a { color:#444; }
+html.light #header .description, html.light h2.date-header, html.light .post-footer,
+html.light .sidebar h2, html.light .soon, html.light .post-body .caption,
+html.light .post-body .parts-title { color:#666; }
+html.light .post { border-bottom-color:#999; }
+html.light .post h3, html.light .post h3 a, html.light .post h3 a:visited { color:#CC6600; }
+html.light .post-body h2, html.light .post-body h3, html.light .post-body h4 { color:#333; }
+html.light .post-body blockquote { color:#555; border-left-color:#AAA; }
+html.light .post-body pre { background:#F6F6F6; border-color:#CCC; color:#B35A00; }
+html.light .post-body code { background:#F6F6F6; color:#B35A00; }
+html.light .post-body img { border-color:#CCC; background:#FFF; }
+html.light .post-body iframe { border-color:#CCC; }
+html.light .post-body hr { border-top-color:#777; }
+html.light .post-body ul.parts { border-left-color:#777; }
+html.light .sidebar .widget { border-bottom-color:#999; }
+html.light .sidebar li:before, html.light .sidebar ul.sub li:before,
+html.light .post-body ul.archive ul.sub li:before { color:#888; }
+html.light .sidebar h2 a:hover { color:#CC6600; }
+html.light #footer { color:#777; }
+/* ---- 80x15 badge ---- */
+#theme-btn { display:inline-flex; width:80px; height:15px; padding:0; margin:8px 0 0; border:1px solid #555;
+  background:#000; cursor:pointer; font:bold 9px/13px Verdana,Tahoma,sans-serif; letter-spacing:0; text-transform:none; }
+#theme-btn span { display:block; height:13px; }
+#theme-btn .l { width:30px; background:#FFC56B; color:#000; border-right:1px solid #555; }
+#theme-btn .r { flex:1; background:#222; color:#CCC; }
+#theme-btn:hover .r { background:#333; color:#FFF; }
+html.light #theme-btn { border-color:#777; background:#FFF; }
+html.light #theme-btn .l { background:#5588AA; color:#FFF; border-right-color:#777; }
+html.light #theme-btn .r { background:#EEE; color:#333; }
+html.light #theme-btn:hover .r { background:#DDD; }
