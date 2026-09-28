@@ -49,3 +49,6 @@ h2.date-header { margin:1.5em 0 .5em; font:normal 78% 'Trebuchet MS',Trebuchet,A
 .post-body ul.archive ul.sub li:before { content:"\2514  "; color:#555; }
 .sidebar h2 a, .sidebar h2 a:visited { color:inherit; }
 .sidebar h2 a:hover { color:#FFC56B; }
+.post-body .parts-title { margin:1.2em 0 .3em; font-size:78%; text-transform:uppercase; letter-spacing:.2em; color:#777; }
+.post-body ul.parts { list-style:none; margin:0 0 .5em; padding:0 0 0 .8em; border-left:1px dotted #777; }
+.post-body ul.parts li { padding:.15em 0; }
