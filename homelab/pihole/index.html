@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>lychi's tree: Homelab part 6: Pi-hole and Unbound DNS</title>
+<link rel="stylesheet" href="../../blog.css">
+</head>
+<body>
+<div id="outer-wrapper">
+<div id="header"><div id="header-inner">
+  <h1><a href="../../">lychi's tree</a></h1>
+  <p class="description">writeups from a student exploring ios security, homelabs, networking, and classic cars</p>
+</div></div>
+<div id="main-wrapper">
+<h2 class="date-header">TODO: Weekday, Month D, YYYY</h2>
+<div class="post">
+  <h3>Homelab part 6: Pi-hole and Unbound DNS</h3>
+  <div class="post-body">
+      <p><a href="../">&laquo; Back to contents</a></p>
+
+      <h2>What it is</h2>
+      <ul>
+        <li>DNS sinkhole: answers lookups normally, returns nothing for ad/tracker/malware domains on its blocklists</li>
+        <li>Logs every DNS lookup on the lab network (useful later for the SOC side)</li>
+        <li>Status: planned, screenshots and results to come</li>
+      </ul>
+
+      <hr/>
+
+      <h2>Where it lives</h2>
+      <ul>
+        <li><b>Host</b>: Debian LXC container on the M920s (Proxmox)</li>
+        <li><b>Network</b>: VLAN 30 (SERVERS), static IP 10.10.30.53</li>
+        <li><b>Upstream</b>: Unbound on the OPNsense firewall (M93p), which also resolves lab hostnames under home.arpa</li>
+      </ul>
+
+      <hr/>
+
+      <h2>How DNS flows</h2>
+      <ul>
+        <li><b>TRUSTED, SERVERS, GAME</b>: Pi-hole, then Unbound, then the internet</li>
+        <li><b>MGMT</b>: straight to Unbound, so admin access survives if Pi-hole goes down</li>
+        <li><b>ATTACK</b>: no DNS, fully isolated</li>
+        <li>The AP doesn't hand out DNS; in AP mode it just bridges Wi-Fi onto VLAN 20</li>
+        <li>OPNsense's DHCP gives each VLAN its DNS server</li>
+      </ul>
+
+      <hr/>
+
+      <h2>Stopping devices from going around it</h2>
+      <ul>
+        <li>Some devices hardcode DNS servers like 8.8.8.8 and ignore DHCP</li>
+        <li><b>Redirect</b>: port 53 traffic to anything other than Pi-hole gets redirected to Pi-hole</li>
+        <li><b>Block DNS over TLS</b>: outbound port 853 blocked</li>
+        <li>DNS over HTTPS can't be blocked by port (uses 443); blocklists catch the common DoH providers</li>
+      </ul>
+
+      <hr/>
+
+      <h2>Testing</h2>
+      <ul>
+        <li>Blocked domain returns 0.0.0.0: <code>dig doubleclick.net @10.10.30.53</code></li>
+        <li>A query sent straight to 8.8.8.8 from a lab device should still appear in Pi-hole's query log (proves the redirect works)</li>
+      </ul>
+
+      <hr/>
+
+      <h2>Known weak spot</h2>
+      <ul>
+        <li>Single point of failure for TRUSTED, SERVERS, GAME</li>
+        <li>If the container stops, those VLANs lose DNS until DHCP points back at Unbound</li>
+        <li>Later options: a second Pi-hole, or Unbound blocklists as a fallback</li>
+      </ul>
+    </div>
+  <p class="post-footer">posted by lychi on <a href="./">TODO: Month D, YYYY</a><br>labels: homelab</p>
+</div>
+<p class="nav-links"><a href="../">Contents</a> &nbsp;|&nbsp; <a href="../../">Home</a></p>
+</div>
+<div id="sidebar-wrapper" class="sidebar">
+  <div class="widget">
+    <h2>About Me</h2>
+    <div class="profile-textblock"><b>lychi</b><br>Student. Legacy iOS research 2020&ndash;2024, now building a homelab, studying networking and cybersecurity, and working on cars.</div>
+  </div>
+  <div class="widget">
+    <h2><a href="../../writeups/">Posts</a></h2>
+    <ul>
+      <li><a href="../../homelab/">Building a homelab from scratch</a>
+        <ul class="sub">
+          <li><a href="../../homelab/hardware/">Hardware, plan, and topology</a></li>
+        </ul>
+      </li>
+      <li><a href="../../writeups/turboswap/">Twin Turbo swap into the SL chassis</a></li>
+      <li><a href="../../writeups/r134aconversion/">Complete AC refresh with an OEM R134a conversion</a></li>
+      <li><a href="../../writeups/3gesteering3s/">3G Eclipse Steering Wheel on 3000GT/Stealth</a></li>
+      <li><a href="../../writeups/occamsrazor/">Enabling offline charging on non-Chinese iPhones</a></li>
+      <li><a href="../../writeups/dralogo/">Custom bootlogos with powdersn0w</a></li>
+      <li><a href="../../writeups/odysseustether/">Tether downgrades with odysseusOTA2</a></li>
+      <li><a href="../../writeups/ipodrootfs/">Installing and booting the iPod4,1 rootfs on the iPhone3,1</a></li>
+      <li><a href="../../writeups/checkm8dg/">Downgrading 32bit devices with checkm8</a></li>
+      <li><a href="../../writeups/135dg/">Downgrading from 13.5.1+ back to 13.5 with shsh2 blobs</a></li>
+      <li><a href="../../writeups/ibootvideo/">Untethered Verbose Boot Demonstration with iBoot exploit</a></li>
+      <li><a href="../../writeups/verboserestore/">Verbose Restoring an iPhone 4S</a></li>
+    </ul>
+  </div>
+  <div class="widget">
+    <h2>Links</h2>
+    <ul>
+      <li><a href="../../writeups/">writeups</a></li>
+      <li><a href="../../repo/">cydia repo</a></li>
+      <li><a href="https://github.com/lychitree/lychitree.github.io/tree/main/repo/debs">debs</a></li>
+    </ul>
+  </div>
+</div>
+<div id="footer">lychi's tree<br>Layout designed and implemented by Claude</div>
+</div>
+</body>
+</html>

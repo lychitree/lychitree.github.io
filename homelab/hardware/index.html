@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>lychi's tree: Homelab part 1: Hardware, plan, and topology</title>
+<link rel="stylesheet" href="../../blog.css">
+</head>
+<body>
+<div id="outer-wrapper">
+<div id="header"><div id="header-inner">
+  <h1><a href="../../">lychi's tree</a></h1>
+  <p class="description">writeups from a student exploring ios security, homelabs, networking, and classic cars</p>
+</div></div>
+<div id="main-wrapper">
+<h2 class="date-header">Friday, September 25, 2026</h2>
+<div class="post">
+  <h3>Homelab part 1: Hardware, plan, and topology</h3>
+  <div class="post-body">
+      <p><a href="../">&laquo; Back to contents</a></p>
+      <h2>Hardware</h2>
+      <ul>
+        <li><b>Lenovo M93p</b>: OPNsense firewall/router. i7-4770, 8GB DDR3, Intel I350 4-port NIC, 128GB SSD (planned)</li>
+        <li><b>Lenovo M920s</b>: Proxmox VE, compute only. i5-8500, 32GB DDR4 (pulled from my PC), 256GB SSD for boot, salvaged 500GB/1TB SSD for VM storage</li>
+        <li><b>Storage</b>: WD 1TB HDD for backups (external enclosure), WD 500GB HDD for ISOs, templates, and bulk storage</li>
+        <li><b>NETGEAR GS308E</b>: managed switch</li>
+        <li><b>NETGEAR R6400v2</b>: lab access point</li>
+        <li><b>Dell G7</b>: SOC node for the security-operations stage</li>
+      </ul>
+
+      <hr/>
+
+      <h2>The plan</h2>
+      <p>OPNsense runs on bare metal on the M93p as the edge of the lab, sitting behind the household router so the whole lab stays isolated from the rest of the household network. Proxmox VE runs on the M920s, chosen over free ESXi, with the lab split into VLANs for management, trusted VMs, servers, game servers, and an isolated attack lab.</p>
+
+      <hr/>
+
+      <h2>Topology</h2>
+      <a href="../src/topology.png"><img src="../src/topology.png" alt="planned homelab topology"></a>
+      <p class="caption">Click to view full size.</p>
+
+      <hr/>
+
+      <h2>Why these machines</h2>
+      <ul>
+        <li><b>Two jobs</b>: a hypervisor host for VMs and services, and a separate edge firewall for the lab</li>
+        <li><b>Constraints</b>: shared apartment (lab can't touch roommates' network), tight budget, used hardware</li>
+      </ul>
+
+      <hr/>
+
+      <h2>The M920s (Proxmox host)</h2>
+      <ul>
+        <li><b>Machine</b>: $106.17 on eBay. i5-8500 (6 cores), VT-x/VT-d, quiet SFF, low idle power, DDR4 slots, low-profile PCIe x16 slot</li>
+        <li><b>RAM</b>: 2x16GB reused from my PC for clean dual channel. Mixing in the stock 8GB would run in flex mode. A matched 2x8GB pair later gets 48GB, still dual channel</li>
+        <li><b>Proxmox over free ESXi</b>: free ESXi 8.0 U3e can't get later patches without a paid entitlement. An unpatchable hypervisor doesn't fit a security lab</li>
+        <li><b>Storage</b>: SSDs for boot and VMs, HDDs only for backups and bulk (VMs on spinning disks feel sluggish)</li>
+      </ul>
+
+      <hr/>
+
+      <h2>Why a separate firewall</h2>
+      <ul>
+        <li><b>Problem with a VM firewall</b>: it goes down whenever Proxmox does, and it shares a hypervisor with attack VMs</li>
+        <li><b>Industry practice</b>: real networks put the perimeter firewall on its own box</li>
+        <li><b>Requirements</b>: 64-bit, AES-NI, 4 cores for Suricata later, a PCIe slot for the NIC, low idle power for 24/7</li>
+        <li><b>Intel I350-T4</b>: $23 OEM Fujitsu pull. Intel NICs have the best Linux and FreeBSD support. OEM pulls avoid the counterfeit I350s common on eBay</li>
+      </ul>
+
+      <hr/>
+
+      <h2>What I ruled out</h2>
+      <ul>
+        <li><b>Dell G7</b>: one Killer NIC, USB NICs are flaky on FreeBSD, no PCIe slot. Better used as the SOC node</li>
+        <li><b>Raspberry Pi</b>: a full kit costs about the same as a used x86 SFF that does more</li>
+        <li><b>Lenovo Tiny</b>: only M720q/M920q-era models take a PCIe card (riser + bracket), around $120 used</li>
+        <li><b>Old NETGEAR ProSAFE firewall</b>: end of life, weak CPU, no IDS</li>
+      </ul>
+
+      <hr/>
+
+      <h2>The M93p (firewall)</h2>
+      <ul>
+        <li><b>Machine</b>: $50 local. i7-4770 (4 cores/8 threads, AES-NI), 8GB included, low-profile PCIe x16 for the I350</li>
+        <li><b>Listing check</b>: listed as M93q (the Tiny, no PCIe slot). BIOS screenshots confirmed the M93p SFF before buying</li>
+        <li><b>Boot drive</b>: cheap new 128GB SSD. OPNsense barely uses 20GB, so the bigger salvaged SSD goes to the M920s instead</li>
+        <li><b>Hardening</b>: Intel AMT disabled (it runs on the onboard NIC; Haswell was hit by INTEL-SA-00075), ME firmware and BIOS updated, onboard NIC disabled</li>
+      </ul>
+    </div>
+  <p class="post-footer">posted by lychi on <a href="./">September 25, 2026</a><br>labels: homelab</p>
+</div>
+<p class="nav-links"><a href="../">Contents</a> &nbsp;|&nbsp; <a href="../../">Home</a></p>
+</div>
+<div id="sidebar-wrapper" class="sidebar">
+  <div class="widget">
+    <h2>About Me</h2>
+    <div class="profile-textblock"><b>lychi</b><br>Student. Legacy iOS research 2020&ndash;2024, now building a homelab, studying networking and cybersecurity, and working on cars.</div>
+  </div>
+  <div class="widget">
+    <h2><a href="../../writeups/">Posts</a></h2>
+    <ul>
+      <li><a href="../../homelab/">Building a homelab from scratch</a>
+        <ul class="sub">
+          <li><a href="../../homelab/hardware/">Hardware, plan, and topology</a></li>
+        </ul>
+      </li>
+      <li><a href="../../writeups/turboswap/">Twin Turbo swap into the SL chassis</a></li>
+      <li><a href="../../writeups/r134aconversion/">Complete AC refresh with an OEM R134a conversion</a></li>
+      <li><a href="../../writeups/3gesteering3s/">3G Eclipse Steering Wheel on 3000GT/Stealth</a></li>
+      <li><a href="../../writeups/occamsrazor/">Enabling offline charging on non-Chinese iPhones</a></li>
+      <li><a href="../../writeups/dralogo/">Custom bootlogos with powdersn0w</a></li>
+      <li><a href="../../writeups/odysseustether/">Tether downgrades with odysseusOTA2</a></li>
+      <li><a href="../../writeups/ipodrootfs/">Installing and booting the iPod4,1 rootfs on the iPhone3,1</a></li>
+      <li><a href="../../writeups/checkm8dg/">Downgrading 32bit devices with checkm8</a></li>
+      <li><a href="../../writeups/135dg/">Downgrading from 13.5.1+ back to 13.5 with shsh2 blobs</a></li>
+      <li><a href="../../writeups/ibootvideo/">Untethered Verbose Boot Demonstration with iBoot exploit</a></li>
+      <li><a href="../../writeups/verboserestore/">Verbose Restoring an iPhone 4S</a></li>
+    </ul>
+  </div>
+  <div class="widget">
+    <h2>Links</h2>
+    <ul>
+      <li><a href="../../writeups/">writeups</a></li>
+      <li><a href="../../repo/">cydia repo</a></li>
+      <li><a href="https://github.com/lychitree/lychitree.github.io/tree/main/repo/debs">debs</a></li>
+    </ul>
+  </div>
+</div>
+<div id="footer">lychi's tree<br>Layout designed and implemented by Claude</div>
+</div>
+</body>
+</html>

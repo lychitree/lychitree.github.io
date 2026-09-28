@@ -37,3 +37,15 @@ h2.date-header { margin:1.5em 0 .5em; font:normal 78% 'Trebuchet MS',Trebuchet,A
 #footer { clear:both; padding-top:15px; line-height:1.6em; text-transform:uppercase; letter-spacing:.1em; text-align:center; color:#555; font-size:78%; }
 @media (max-width:800px) { #main-wrapper, #sidebar-wrapper { float:none; width:auto; } }
 
+.soon { color:#777; }
+.post-body .caption { text-align:center; color:#777; font-size:90%; margin-top:-8px; }
+.sidebar ul.sub { margin:.2em 0 .1em 0; }
+.sidebar ul.sub li { font-size:92%; padding-left:15px; text-indent:-15px; }
+.sidebar ul.sub li:before { content:"\2514  "; color:#555; }
+.post-body ul.archive { list-style:none; padding-left:0; margin:.2em 0 1em; }
+.post-body ul.archive li { padding:.15em 0; }
+.post-body h2.date-header { margin:1.5em 0 .5em; font:normal 78% 'Trebuchet MS',Trebuchet,Arial,Verdana,sans-serif; line-height:1.4em; text-transform:uppercase; letter-spacing:.2em; color:#777; }
+.post-body ul.archive ul.sub { list-style:none; margin:.2em 0 0 1.2em; padding:0; font-size:92%; }
+.post-body ul.archive ul.sub li:before { content:"\2514  "; color:#555; }
+.sidebar h2 a, .sidebar h2 a:visited { color:inherit; }
+.sidebar h2 a:hover { color:#FFC56B; }

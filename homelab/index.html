@@ -17,19 +17,23 @@
 <div class="post">
   <h3>Building a homelab from scratch</h3>
   <div class="post-body">
-      <p>After a few years away from iOS research, I've moved on to networking and security. This post is the start of a running log for a home server built from scratch, from the hardware up. I'm documenting all of it here and on GitHub as I go, mostly so future me can figure out what past me did.</p>
+      <p>In pursuit of real-world NOC and SOC experience, I've begun building a homelab from the ground up and documenting every step. The goal is to put concepts from my university courses and my CCNA and CompTIA Security+ studies into practice on real hardware, from firewall and switch configuration to network monitoring and threat detection. Each part of the build gets its own writeup below.</p>
 
-      <h4>The hardware</h4>
-      <ul>
-        <li>Lenovo M920s (i5-8500), bumped from 8GB to 32GB of RAM pulled from my PC</li>
-        <li>256GB SSD for now, 500GB/1TB upgrade planned</li>
-        <li>NETGEAR GS308E managed switch</li>
-        <li>NETGEAR R6400v2 router</li>
-      </ul>
-
-      <h4>The plan</h4>
-      <p>Proxmox VE as the hypervisor, chosen over free ESXi, with OPNsense running as the firewall VM. The whole lab stays isolated from the rest of the household network.</p>
-      <p>Next up: installing Proxmox and getting OPNsense sitting between the lab and everything else. Stay tuned.</p>
+      <h2>Contents</h2>
+      <!-- Link each part as it's written, e.g. <li><a href="opnsense/">Installing OPNsense on the M93p</a></li> -->
+      <ol>
+        <li><a href="hardware/">Hardware, plan, and topology</a></li>
+        <li>Installing OPNsense on the M93p <span class="soon">(coming soon)</span></li>
+        <li>Switch setup: VLANs, trunks, and port config on the GS308E <span class="soon">(coming soon)</span></li>
+        <li>Firewall rules: VLAN traffic, household isolation, and double NAT <span class="soon">(coming soon)</span></li>
+        <li>Installing Proxmox VE on the M920s <span class="soon">(coming soon)</span></li>
+        <li>Pi-hole and Unbound DNS <span class="soon">(coming soon)</span></li>
+        <li>R6400v2 as a lab access point <span class="soon">(coming soon)</span></li>
+        <li>Game servers in the DMZ <span class="soon">(coming soon)</span></li>
+        <li>SecOps: Dell G7 SOC node and SPAN monitoring <span class="soon">(coming soon)</span></li>
+        <li>Attack lab: Kali and targets <span class="soon">(coming soon)</span></li>
+        <li>Cisco switch and IOS configuration <span class="soon">(once I get one)</span></li>
+      </ol>
     </div>
   <p class="post-footer">posted by lychi on <a href="./">September 25, 2026</a><br>labels: homelab</p>
 </div>
@@ -41,9 +45,13 @@
     <div class="profile-textblock"><b>lychi</b><br>Student. Legacy iOS research 2020&ndash;2024, now building a homelab, studying networking and cybersecurity, and working on cars.</div>
   </div>
   <div class="widget">
-    <h2>Posts</h2>
+    <h2><a href="../writeups/">Posts</a></h2>
     <ul>
-      <li><a href="../homelab/">Building a homelab from scratch</a></li>
+      <li><a href="../homelab/">Building a homelab from scratch</a>
+        <ul class="sub">
+          <li><a href="../homelab/hardware/">Hardware, plan, and topology</a></li>
+        </ul>
+      </li>
       <li><a href="../writeups/turboswap/">Twin Turbo swap into the SL chassis</a></li>
       <li><a href="../writeups/r134aconversion/">Complete AC refresh with an OEM R134a conversion</a></li>
       <li><a href="../writeups/3gesteering3s/">3G Eclipse Steering Wheel on 3000GT/Stealth</a></li>
@@ -55,19 +63,6 @@
       <li><a href="../writeups/135dg/">Downgrading from 13.5.1+ back to 13.5 with shsh2 blobs</a></li>
       <li><a href="../writeups/ibootvideo/">Untethered Verbose Boot Demonstration with iBoot exploit</a></li>
       <li><a href="../writeups/verboserestore/">Verbose Restoring an iPhone 4S</a></li>
-    </ul>
-  </div>
-  <div class="widget">
-    <h2>Archives</h2>
-    <ul>
-      <li><a href="../#september-2026">September 2026</a> (1)</li>
-      <li><a href="../#july-2026">July 2026</a> (1)</li>
-      <li><a href="../#october-2024">October 2024</a> (1)</li>
-      <li><a href="../#october-2023">October 2023</a> (1)</li>
-      <li><a href="../writeups/">July 2022</a> (2)</li>
-      <li><a href="../writeups/">June 2022</a> (2)</li>
-      <li><a href="../writeups/">July 2020</a> (2)</li>
-      <li><a href="../writeups/">June 2020</a> (2)</li>
     </ul>
   </div>
   <div class="widget">
