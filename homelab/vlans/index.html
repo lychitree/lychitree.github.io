@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>lychi's tree: Homelab part 5: VLANs across the switch, firewall, and cluster</title>
+<link rel="stylesheet" href="../../blog.css">
+<script>try{if(localStorage.getItem('theme')==='light')document.documentElement.className+=' light';}catch(e){}</script>
+</head>
+<body>
+<div id="outer-wrapper">
+<div id="header"><div id="header-inner">
+  <h1><a href="../../">lychi's tree</a></h1>
+  <p class="description">writeups from a student exploring ios security, homelabs, networking, and classic cars</p>
+  <p class="topnav"><a href="../../homelab/">homelab</a><span class="sep">&middot;</span><a href="../../writeups/">writeups</a><span class="sep">&middot;</span><a href="../../repo/">cydia repo</a></p>
+</div></div>
+<div id="main-wrapper">
+<div class="post">
+  <h3>Homelab part 5: VLANs across the switch, firewall, and cluster</h3>
+  <div class="post-body">
+      <p><a href="../">&laquo; Back to contents</a></p>
+
+      <p>Up until this point, the whole lab was one flat network on OPNsense's default <code>192.168.1.0/24</code>. The firewall, the switch, and both Proxmox nodes all sat on it together. In one night, I moved everything over to <code>10.0.x.0/24</code> and split the lab into VLANs, which meant changing the switch, OPNsense, and the Proxmox cluster all at once.</p>
+
+      <h2>The first try on the switch</h2>
+      <p>My first attempt was the GS308E's Basic 802.1Q mode with management on its own VLAN 10. That isn't how it ended up. In the final setup, management stays on VLAN 1 untagged and the switch runs Advanced 802.1Q instead.</p>
+      <a href="src/switch-basic-8021q.png"><img src="src/switch-basic-8021q.png" alt="GS308E in Basic 802.1Q mode with VLAN 10 as MGMT"></a>
+
+      <h2>Renumbering the switch</h2>
+      <p>Before anything else, I turned off DHCP on the switch and gave it a static address on the new management subnet, with OPNsense as its gateway.</p>
+      <a href="src/switch-ip.png"><img src="src/switch-ip.png" alt="GS308E static IP on 10.0.10.0/24"></a>
+
+      <h2>OPNsense interfaces</h2>
+      <p>On OPNsense, I moved LAN to <code>10.0.10.1/24</code> and created a VLAN interface on top of it for each of the other networks: TRUSTED, SERVERS, GAME, TARGET, and ATTACK. Each one gets <code>.1</code> on its own subnet, so OPNsense is the gateway for all of them.</p>
+      <a href="src/opnsense-vlan-interfaces.png"><img src="src/opnsense-vlan-interfaces.png" alt="OPNsense interface assignments with VLAN interfaces"></a>
+
+      <h2>Aliases and rules</h2>
+      <p>To keep the rules readable, I made three aliases first. <code>household</code> is the household network, <code>private</code> is all three RFC 1918 ranges, and <code>pihole</code> is the Pi-hole container.</p>
+      <a href="src/opnsense-aliases.png"><img src="src/opnsense-aliases.png" alt="OPNsense firewall aliases"></a>
+      <p>LAN and TRUSTED get blocked from the household network and are allowed out everywhere else. SERVERS is blocked from every private range, so it can only reach the internet. GAME is the same, except a rule above the block lets it reach Pi-hole on port 53 for DNS. ATTACK can only reach the TARGET network, and TARGET has no rules at all, so nothing on it can start a connection.</p>
+      <a href="src/opnsense-rules.png"><img src="src/opnsense-rules.png" alt="OPNsense interface firewall rules"></a>
+
+      <h2>Switch VLANs and ports</h2>
+      <p>Back on the switch, I switched to Advanced 802.1Q mode and created the VLANs. Port 1 is the trunk to the firewall and carries all of them. Ports 2 and 3 go to the Proxmox nodes and carry whatever VLANs their guests need, with MGMT untagged for the hosts themselves. The attacker, the gaming PC, and the MacBook are access ports, and the two empty ports are parked on VLAN 99, so nothing plugged into them lands on a real network.</p>
+      <a href="src/switch-vlan-members.png"><img src="src/switch-vlan-members.png" alt="GS308E Advanced 802.1Q VLAN membership"></a>
+      <p>An access port needs two settings to match. Its untagged VLAN controls what the switch sends out to the device, and its PVID controls which VLAN the device's own traffic lands on. If they don't match, traffic only works in one direction.</p>
+      <a href="src/switch-pvids.png"><img src="src/switch-pvids.png" alt="GS308E port PVIDs"></a>
+      <p>Every port also starts as an untagged member of VLAN 1, and setting a PVID doesn't remove it. Until I set ports 4 through 7 to excluded on VLAN 1, the attacker port showed as <code>1, 66*</code>, which meant the Kali box could still see broadcast traffic from the management network, even though its own traffic landed on ATTACK. Now, VLAN 1 is only ports 1, 2, 3, and 8.</p>
+
+      <h2>Proxmox</h2>
+      <p>On each node, the <code>vmbr0</code> bridge got its new MGMT address with OPNsense as the gateway, and I turned on VLAN aware so containers can be put on a VLAN just by setting a tag.</p>
+      <a href="src/proxmox-vmbr0.png"><img src="src/proxmox-vmbr0.png" alt="Proxmox vmbr0 bridge, VLAN aware"></a>
+      <p>Changing the host addresses didn't change the cluster. Corosync was still pointed at the old <code>192.168.1.x</code> addresses, which you can see with:</p>
+      <pre>pvecm status
+corosync-cfgtool -s</pre>
+      <p>To fix it, I made a backup and a copy of the config, then edited the copy. I changed each node's <code>ring0_addr</code> to its new MGMT address, left <code>ring1_addr</code> on the direct cable between the nodes, and bumped <code>config_version</code> from 3 to 4.</p>
+      <pre>cp /etc/pve/corosync.conf /root/corosync.conf.bak
+cp /etc/pve/corosync.conf /etc/pve/corosync.conf.new
+nano /etc/pve/corosync.conf.new</pre>
+      <a href="src/corosync-edit.png"><img src="src/corosync-edit.png" alt="Editing corosync.conf.new"></a>
+      <p>Saving the file wasn't enough. After moving the new config into place, <code>pvecm status</code> still showed the old addresses, because corosync doesn't pick up the change until it restarts. I restarted it on one node, waited a few seconds, and then did the other:</p>
+      <pre>mv /etc/pve/corosync.conf.new /etc/pve/corosync.conf
+systemctl restart corosync
+systemctl restart pve-cluster</pre>
+      <p>The direct link between the nodes kept them talking while the management addresses changed, so the cluster never fully lost quorum. Once both had restarted, <code>pvecm status</code> showed config version 4, with both nodes on the new subnet and the cluster still quorate.</p>
+      <a href="src/corosync-after.png"><img src="src/corosync-after.png" alt="pvecm status after the change"></a>
+      <p>-lychi (2026)</p>
+    </div>
+  <p class="post-footer">posted by lychi<br>labels: homelab</p>
+</div>
+<p class="nav-links"><a href="../">Contents</a> &nbsp;|&nbsp; <a href="../../">Home</a></p>
+</div>
+<div id="sidebar-wrapper" class="sidebar">
+  <div class="widget">
+    <h2>About Me</h2>
+    <div class="profile-textblock"><b>lychi</b><br>Student. Legacy iOS research 2020&ndash;2024, now building a homelab, studying networking and cybersecurity, and working on cars.</div>
+  </div>
+  <div class="widget">
+    <h2><a href="../../writeups/">Posts</a></h2>
+    <ul>
+      <li><a href="../../homelab/">Building a homelab from scratch</a>
+        <ul class="sub">
+          <li><a href="../../homelab/hardware/">Hardware, plan, and topology</a></li>
+          <li><a href="../../homelab/vlans/">VLANs across the switch, firewall, and cluster</a></li>
+        </ul>
+      </li>
+      <li><a href="../../writeups/turboswap/">Twin Turbo swap into the SL chassis</a></li>
+      <li><a href="../../writeups/r134aconversion/">Complete AC refresh with an OEM R134a conversion</a></li>
+      <li><a href="../../writeups/3gesteering3s/">3G Eclipse Steering Wheel on 3000GT/Stealth</a></li>
+      <li><a href="../../writeups/occamsrazor/">Enabling offline charging on non-Chinese iPhones</a></li>
+      <li><a href="../../writeups/dralogo/">Custom bootlogos with powdersn0w</a></li>
+      <li><a href="../../writeups/odysseustether/">Tether downgrades with odysseusOTA2</a></li>
+      <li><a href="../../writeups/ipodrootfs/">Installing and booting the iPod4,1 rootfs on the iPhone3,1</a></li>
+      <li><a href="../../writeups/checkm8dg/">Downgrading 32bit devices with checkm8</a></li>
+      <li><a href="../../writeups/135dg/">Downgrading from 13.5.1+ back to 13.5 with shsh2 blobs</a></li>
+      <li><a href="../../writeups/ibootvideo/">Untethered Verbose Boot Demonstration with iBoot exploit</a></li>
+      <li><a href="../../writeups/verboserestore/">Verbose Restoring an iPhone 4S</a></li>
+    </ul>
+  </div>
+  <div class="widget">
+    <h2>Links</h2>
+    <ul>
+      <li><a href="../../writeups/">writeups</a></li>
+      <li><a href="../../repo/">cydia repo</a></li>
+      <li><a href="https://github.com/lychitree/lychitree.github.io/tree/main/repo/debs">debs</a></li>
+    </ul>
+  </div>
+</div>
+<div id="footer">lychi's tree<br>Layout designed and implemented by Claude<br>
+<button id="theme-btn" type="button" title="Switch light/dark"><span class="l">MODE</span><span class="r">LIGHT</span></button></div>
+<script src="../../theme.js"></script>
+</div>
+</body>
+</html>

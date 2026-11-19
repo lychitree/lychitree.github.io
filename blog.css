@@ -90,3 +90,37 @@ html.light #theme-btn { border-color:#777; background:#FFF; }
 html.light #theme-btn .l { background:#5588AA; color:#FFF; border-right-color:#777; }
 html.light #theme-btn .r { background:#EEE; color:#333; }
 html.light #theme-btn:hover .r { background:#DDD; }
+
+/* ---- tables + inline diagrams (homelab) ---- */
+.post-body table { border-collapse:collapse; width:100%; margin:.6em 0 1em; font-size:95%; line-height:1.45em; }
+.post-body th, .post-body td { border:1px solid #333; padding:3px 6px; text-align:left; vertical-align:top; }
+.post-body th { background:#111; color:#FFC56B; font-weight:normal; }
+.post-body svg.topo { display:block; width:100%; height:auto; margin:15px auto; border:1px solid #333; background:#111; box-sizing:border-box; color:#CCC; }
+.post-body svg.topo .accent { color:#FFC56B; }
+.post-body svg.topo .dim { color:#777; }
+html.light .post-body th, html.light .post-body td { border-color:#CCC; }
+html.light .post-body th { background:#F6F6F6; color:#B35A00; }
+html.light .post-body svg.topo { border-color:#CCC; background:#FFF; color:#333; }
+html.light .post-body svg.topo .accent { color:#CC6600; }
+html.light .post-body svg.topo .dim { color:#888; }
+
+/* ---- header nav + pinned project box ---- */
+#header .topnav { margin:0; padding:0 20px 12px; font:78% 'Trebuchet MS',Trebuchet,Verdana,sans-serif; letter-spacing:.15em; text-transform:uppercase; }
+#header .topnav a, #header .topnav a:visited { color:#999; }
+#header .topnav a:hover { color:#FFC56B; }
+#header .topnav .sep { color:#444; margin:0 .5em; }
+.project { border:1px solid #333; border-left:3px solid #FFC56B; background:#0a0a0a; padding:10px 14px 12px; margin:1.5em 0; }
+.project .tag { font:normal 78% 'Trebuchet MS',Trebuchet,Arial,Verdana,sans-serif; text-transform:uppercase; letter-spacing:.2em; color:#FFC56B; margin:0 0 .3em; }
+.project h3 { margin:0 0 .3em; font-size:140%; font-weight:normal; color:#FFC56B; line-height:1.4em; }
+.project h3 a, .project h3 a:visited { color:#FFC56B; }
+.project p { margin:.4em 0; line-height:1.6em; }
+.project ul.parts { list-style:none; margin:.4em 0; padding:0 0 0 .8em; border-left:1px dotted #777; }
+.project ul.parts li { padding:.15em 0; }
+.section-label { margin:2em 0 .5em; font:normal 78% 'Trebuchet MS',Trebuchet,Arial,Verdana,sans-serif; text-transform:uppercase; letter-spacing:.2em; color:#777; border-bottom:1px dotted #333; padding-bottom:4px; }
+html.light #header .topnav a, html.light #header .topnav a:visited { color:#666; }
+html.light #header .topnav a:hover { color:#CC6600; }
+html.light #header .topnav .sep { color:#AAA; }
+html.light .project { border-color:#CCC; border-left-color:#CC6600; background:#FAFAFA; }
+html.light .project .tag, html.light .project h3, html.light .project h3 a, html.light .project h3 a:visited { color:#CC6600; }
+html.light .project ul.parts { border-left-color:#777; }
+html.light .section-label { color:#666; border-bottom-color:#999; }

@@ -12,83 +12,110 @@
 <div id="header"><div id="header-inner">
   <h1><a href="../../">lychi's tree</a></h1>
   <p class="description">writeups from a student exploring ios security, homelabs, networking, and classic cars</p>
+  <p class="topnav"><a href="../../homelab/">homelab</a><span class="sep">&middot;</span><a href="../../writeups/">writeups</a><span class="sep">&middot;</span><a href="../../repo/">cydia repo</a></p>
 </div></div>
 <div id="main-wrapper">
-<h2 class="date-header">Friday, September 25, 2026</h2>
 <div class="post">
   <h3>Homelab part 1: Hardware, plan, and topology</h3>
   <div class="post-body">
       <p><a href="../">&laquo; Back to contents</a></p>
+
       <h2>Hardware</h2>
-      <ul>
-        <li><b>Lenovo M93p</b>: OPNsense firewall/router. i7-4770, 8GB DDR3, Intel I350 4-port NIC, 128GB SSD (planned)</li>
-        <li><b>Lenovo M920s</b>: Proxmox VE, compute only. i5-8500, 32GB DDR4 (pulled from my PC), 256GB SSD for boot, salvaged 500GB/1TB SSD for VM storage</li>
-        <li><b>Storage</b>: WD 1TB HDD for backups (external enclosure), WD 500GB HDD for ISOs, templates, and bulk storage</li>
-        <li><b>NETGEAR GS308E</b>: managed switch</li>
-        <li><b>NETGEAR R6400v2</b>: lab access point</li>
-        <li><b>Dell G7</b>: SOC node for the security-operations stage</li>
-      </ul>
-
-      <hr/>
-
-      <h2>The plan</h2>
-      <p>OPNsense runs on bare metal on the M93p as the edge of the lab, sitting behind the household router so the whole lab stays isolated from the rest of the household network. Proxmox VE runs on the M920s, chosen over free ESXi, with the lab split into VLANs for management, trusted VMs, servers, game servers, and an isolated attack lab.</p>
-
-      <hr/>
+      <table>
+        <tr><th>Role</th><th>Machine</th><th>CPU</th><th>Network</th></tr>
+        <tr><td>Firewall (OPNsense, bare metal)</td><td>ThinkCentre M700 Tiny</td><td>i5-6400T, 8 GB</td><td>Onboard Intel I219 (LAN), M.2 Intel i226 (WAN)</td></tr>
+        <tr><td>Proxmox node 1 (services)</td><td>ThinkCentre M920s</td><td>i5-8500</td><td>Intel I350-T4</td></tr>
+        <tr><td>Proxmox node 2 (targets and testing)</td><td>ThinkCentre M720s</td><td>i5-9400</td><td>Intel I350-T2</td></tr>
+        <tr><td>Attacker (Kali, bare metal)</td><td>ThinkCentre M720q</td><td>i5-8500T</td><td>Onboard NIC</td></tr>
+        <tr><td>Managed switch</td><td>NETGEAR GS308E v4</td><td>n/a</td><td>8 ports, 802.1Q VLANs</td></tr>
+      </table>
 
       <h2>Topology</h2>
-      <a href="../src/topology.png"><img src="../src/topology.png" alt="planned homelab topology"></a>
-      <p class="caption">Click to view full size.</p>
+      <svg class="topo" viewBox="0 0 540 390" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Homelab topology: internet, household gateway, OPNsense firewall, GS308E switch, and five lab devices" font-family="Trebuchet MS, Verdana, sans-serif" text-anchor="middle">
+        <g fill="none" stroke="currentColor" stroke-width="1">
+          <line x1="270" y1="40" x2="270" y2="62"/>
+          <line x1="270" y1="92" x2="270" y2="118"/>
+          <line class="accent" x1="270" y1="160" x2="270" y2="192" stroke-width="2"/>
+          <line x1="58" y1="226" x2="58" y2="266"/>
+          <line x1="162" y1="226" x2="162" y2="266"/>
+          <line x1="266" y1="226" x2="266" y2="266"/>
+          <line x1="370" y1="226" x2="370" y2="266"/>
+          <line x1="474" y1="226" x2="474" y2="266"/>
+          <path class="accent" d="M58 330 V350 H162 V330" stroke-dasharray="4 3"/>
+          <rect x="200" y="10" width="140" height="30" rx="3"/>
+          <rect class="dim" x="160" y="62" width="220" height="30" rx="3"/>
+          <rect class="accent" x="160" y="118" width="220" height="42" rx="3" stroke-width="1.5"/>
+          <rect x="20" y="192" width="500" height="34" rx="3"/>
+          <rect x="10" y="266" width="96" height="64" rx="3"/>
+          <rect x="114" y="266" width="96" height="64" rx="3"/>
+          <rect x="218" y="266" width="96" height="64" rx="3"/>
+          <rect x="322" y="266" width="96" height="64" rx="3"/>
+          <rect x="426" y="266" width="96" height="64" rx="3"/>
+        </g>
+        <g fill="currentColor" font-size="11">
+          <text x="270" y="29">Internet</text>
+          <text class="dim" x="270" y="81">Household ISP gateway (NAT 1)</text>
+          <text class="accent" x="270" y="136" font-weight="bold">OPNsense &#183; M700 Tiny</text>
+          <text x="270" y="152" font-size="9.5">NAT 2 &#183; gateway .1 on every lab VLAN</text>
+          <text x="312" y="109" font-size="9" text-anchor="start">WAN &#183; i226</text>
+          <text x="280" y="180" font-size="9" text-anchor="start">LAN &#183; I219 &#8594; port 1 (trunk)</text>
+          <text x="270" y="207" font-weight="bold">NETGEAR GS308E &#183; 802.1Q</text>
+          <text class="dim" x="270" y="220" font-size="9">ports 5&#8211;6 parked on VLAN 99</text>
+        </g>
+        <g fill="currentColor" font-size="9.5">
+          <text x="58" y="281" font-weight="bold">Proxmox node 1</text>
+          <text x="58" y="294">M920s &#183; services</text>
+          <text class="dim" x="58" y="309">port 2 (trunk)</text>
+          <text class="dim" x="58" y="322">1 &#183; 30 &#183; 40</text>
+          <text x="162" y="281" font-weight="bold">Proxmox node 2</text>
+          <text x="162" y="294">M720s &#183; targets</text>
+          <text class="dim" x="162" y="309">port 3 (trunk)</text>
+          <text class="dim" x="162" y="322">1 &#183; 30 &#183; 40 &#183; 60</text>
+          <text x="266" y="281" font-weight="bold">Attacker</text>
+          <text x="266" y="294">M720q &#183; Kali</text>
+          <text class="dim" x="266" y="309">port 4</text>
+          <text class="dim" x="266" y="322">66 (ATTACK)</text>
+          <text x="370" y="281" font-weight="bold">Gaming PC</text>
+          <text x="370" y="294">personal device</text>
+          <text class="dim" x="370" y="309">port 7</text>
+          <text class="dim" x="370" y="322">20 (TRUSTED)</text>
+          <text x="474" y="281" font-weight="bold">MacBook</text>
+          <text x="474" y="294">admin</text>
+          <text class="dim" x="474" y="309">port 8</text>
+          <text class="dim" x="474" y="322">1 (MGMT)</text>
+          <text class="accent" x="110" y="366" font-size="9">direct cable &#183; corosync link 1</text>
+        </g>
+      </svg>
 
-      <hr/>
+      <h2>Switch ports</h2>
+      <table>
+        <tr><th>Port</th><th>Device</th><th>VLANs</th></tr>
+        <tr><td>1</td><td>M700 (firewall LAN)</td><td>1 untagged, 20/30/40/60/66 tagged</td></tr>
+        <tr><td>2</td><td>M920s</td><td>1 untagged, 30/40 tagged</td></tr>
+        <tr><td>3</td><td>M720s</td><td>1 untagged, 30/40/60 tagged</td></tr>
+        <tr><td>4</td><td>M720q</td><td>66 untagged</td></tr>
+        <tr><td>5&#8211;6</td><td>Unused</td><td>99 untagged</td></tr>
+        <tr><td>7</td><td>Gaming PC</td><td>20 untagged</td></tr>
+        <tr><td>8</td><td>MacBook</td><td>1 untagged</td></tr>
+      </table>
+      <p>OPNsense sits at .1 on every subnet, and Dnsmasq on OPNsense hands out DHCP from .100 to .199. The firewall, switch, Proxmox hosts, Pi-hole, and the Minecraft server all have fixed addresses.</p>
 
-      <h2>Why these machines</h2>
-      <ul>
-        <li><b>Two jobs</b>: a hypervisor host for VMs and services, and a separate edge firewall for the lab</li>
-        <li><b>Constraints</b>: shared apartment (lab can't touch roommates' network), tight budget, used hardware</li>
-      </ul>
-
-      <hr/>
-
-      <h2>The M920s (Proxmox host)</h2>
-      <ul>
-        <li><b>Machine</b>: $106.17 on eBay. i5-8500 (6 cores), VT-x/VT-d, quiet SFF, low idle power, DDR4 slots, low-profile PCIe x16 slot</li>
-        <li><b>RAM</b>: 2x16GB reused from my PC for clean dual channel. Mixing in the stock 8GB would run in flex mode. A matched 2x8GB pair later gets 48GB, still dual channel</li>
-        <li><b>Proxmox over free ESXi</b>: free ESXi 8.0 U3e can't get later patches without a paid entitlement. An unpatchable hypervisor doesn't fit a security lab</li>
-        <li><b>Storage</b>: SSDs for boot and VMs, HDDs only for backups and bulk (VMs on spinning disks feel sluggish)</li>
-      </ul>
-
-      <hr/>
+      <h2>The Proxmox cluster</h2>
+      <p>The two nodes are in a cluster called <code>homelab</code>. Corosync has two links: link 0 runs over MGMT, and link 1 runs over a direct cable between the two nodes on <code>192.168.2.0/24</code>, so either one can carry the cluster if the other goes down. Each node has a VLAN-aware <code>vmbr0</code> bridge, and containers get their VLAN by tag.</p>
+      <p>For IDs, I use 100&#8211;149 for containers and Linux VMs and 150&#8211;160 for Windows and AD. There's no HA yet since that needs a third quorum vote.</p>
 
       <h2>Why a separate firewall</h2>
-      <ul>
-        <li><b>Problem with a VM firewall</b>: it goes down whenever Proxmox does, and it shares a hypervisor with attack VMs</li>
-        <li><b>Industry practice</b>: real networks put the perimeter firewall on its own box</li>
-        <li><b>Requirements</b>: 64-bit, AES-NI, 4 cores for Suricata later, a PCIe slot for the NIC, low idle power for 24/7</li>
-        <li><b>Intel I350-T4</b>: $23 OEM Fujitsu pull. Intel NICs have the best Linux and FreeBSD support. OEM pulls avoid the counterfeit I350s common on eBay</li>
-      </ul>
+      <p>I live in a shared house, so the lab can't touch anyone else's network, and I'm on a tight budget with used hardware. I kept the firewall on its own box instead of running it as a VM. A VM firewall goes down whenever Proxmox does, and it would share a hypervisor with the attack VMs. Real networks put the perimeter firewall on its own box too.</p>
 
-      <hr/>
+      <h2>Why Proxmox</h2>
+      <p>I went with Proxmox over free ESXi because free ESXi 8.0 U3e can't get later patches without a paid entitlement, and an unpatchable hypervisor doesn't make sense for a security lab.</p>
+      <p>The M920s was $106.17 on eBay. It has VT-x/VT-d, it's quiet, it idles low, and it has a low profile PCIe x16 slot, which is where the I350-T4 went. That card was a $23 OEM Fujitsu pull. I stuck with Intel NICs because they have the best Linux and FreeBSD support, and buying an OEM pull avoids the fake I350s all over eBay.</p>
 
-      <h2>What I ruled out</h2>
-      <ul>
-        <li><b>Dell G7</b>: one Killer NIC, USB NICs are flaky on FreeBSD, no PCIe slot. Better used as the SOC node</li>
-        <li><b>Raspberry Pi</b>: a full kit costs about the same as a used x86 SFF that does more</li>
-        <li><b>Lenovo Tiny</b>: only M720q/M920q-era models take a PCIe card (riser + bracket), around $120 used</li>
-        <li><b>Old NETGEAR ProSAFE firewall</b>: end of life, weak CPU, no IDS</li>
-      </ul>
-
-      <hr/>
-
-      <h2>The M93p (firewall)</h2>
-      <ul>
-        <li><b>Machine</b>: $50 local. i7-4770 (4 cores/8 threads, AES-NI), 8GB included, low-profile PCIe x16 for the I350</li>
-        <li><b>Listing check</b>: listed as M93q (the Tiny, no PCIe slot). BIOS screenshots confirmed the M93p SFF before buying</li>
-        <li><b>Boot drive</b>: cheap new 128GB SSD. OPNsense barely uses 20GB, so the bigger salvaged SSD goes to the M920s instead</li>
-        <li><b>Hardening</b>: Intel AMT disabled (it runs on the onboard NIC; Haswell was hit by INTEL-SA-00075), ME firmware and BIOS updated, onboard NIC disabled</li>
-      </ul>
+      <h2>Changes from the original plan</h2>
+      <p>The first version of this page had an M93p as the firewall with the I350-T4 in it and a single Proxmox host. Since then, the firewall moved to the M700 Tiny, the I350-T4 moved into the M920s, the M720s joined as a second node, and Kali got its own M720q. I also renumbered the lab from 10.10.x.x to 10.0.x.x. The R6400v2 access point and the Dell G7 SOC node aren't part of the build anymore.</p>
+      <p>-lychi (2026)</p>
     </div>
-  <p class="post-footer">posted by lychi on <a href="./">September 25, 2026</a><br>labels: homelab</p>
+  <p class="post-footer">posted by lychi<br>labels: homelab</p>
 </div>
 <p class="nav-links"><a href="../">Contents</a> &nbsp;|&nbsp; <a href="../../">Home</a></p>
 </div>
@@ -103,6 +130,7 @@
       <li><a href="../../homelab/">Building a homelab from scratch</a>
         <ul class="sub">
           <li><a href="../../homelab/hardware/">Hardware, plan, and topology</a></li>
+          <li><a href="../../homelab/vlans/">VLANs across the switch, firewall, and cluster</a></li>
         </ul>
       </li>
       <li><a href="../../writeups/turboswap/">Twin Turbo swap into the SL chassis</a></li>
